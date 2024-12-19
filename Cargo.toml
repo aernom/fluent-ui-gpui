@@ -1,0 +1,9 @@
+[package]
+name = "fluent-ui-gpui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+gpui = { git = "https://github.com/zed-industries/zed" }
+smallvec = "1"
+unicode-segmentation = "1.12.0"
