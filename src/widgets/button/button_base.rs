@@ -3,74 +3,68 @@ use gpui::{
     CursorStyle, Div, ElementId, FontWeight, InteractiveElement, IntoElement, ParentElement,
     RenderOnce, Rgba, StatefulInteractiveElement, Styled, Svg, WindowContext,
 };
-use smallvec::SmallVec;
 
 use crate::{BorderRadius, Clickable, Disableable, FixedWidth, Theme};
 
 #[derive(IntoElement)]
-pub struct Button {
-    pub base: Div,
+pub(super) struct ButtonBase {
+    pub(super) base: Div,
     id: ElementId,
-    children: SmallVec<[AnyElement; 2]>,
     leading: Option<Svg>,
     trailing: Option<Svg>,
     label: Option<AnyElement>,
     disabled: bool,
     appearance: ButtonAppearance,
+    pub(super) selected: bool,
     shape: ButtonShape,
     on_click: Option<Box<dyn Fn(&ClickEvent, &mut WindowContext) + 'static>>,
     cursor_style: CursorStyle,
 }
 
-impl Button {
-    pub fn new(id: impl Into<ElementId>) -> Self {
+impl ButtonBase {
+    pub(super) fn new(id: impl Into<ElementId>) -> Self {
         Self {
             base: div().flex_shrink_0(),
             id: id.into(),
-            children: SmallVec::new(),
             leading: None,
             trailing: None,
             label: None,
             disabled: false,
             appearance: ButtonAppearance::default(),
+            selected: false,
             shape: ButtonShape::default(),
             on_click: None,
             cursor_style: CursorStyle::PointingHand,
         }
     }
 
-    pub fn label(mut self, label: impl IntoElement) -> Self {
+    pub(super) fn label(mut self, label: impl IntoElement) -> Self {
         self.label = Some(label.into_any_element());
         self
     }
 
-    pub fn leading(mut self, leading: Svg) -> Self {
+    pub(super) fn leading(mut self, leading: Svg) -> Self {
         self.leading = Some(leading);
         self
     }
 
-    pub fn trailing(mut self, trailing: Svg) -> Self {
+    pub(super) fn trailing(mut self, trailing: Svg) -> Self {
         self.trailing = Some(trailing);
         self
     }
 
-    pub fn appearance(mut self, style: ButtonAppearance) -> Self {
+    pub(super) fn appearance(mut self, style: ButtonAppearance) -> Self {
         self.appearance = style;
         self
     }
 
-    pub fn shape(mut self, shape: ButtonShape) -> Self {
+    pub(super) fn shape(mut self, shape: ButtonShape) -> Self {
         self.shape = shape;
-        self
-    }
-
-    pub fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
-        self.on_click = Some(Box::new(handler));
         self
     }
 }
 
-impl Clickable for Button {
+impl Clickable for ButtonBase {
     fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
         self.on_click = Some(Box::new(handler));
         self
@@ -82,14 +76,14 @@ impl Clickable for Button {
     }
 }
 
-impl Disableable for Button {
+impl Disableable for ButtonBase {
     fn disabled(mut self, disabled: bool) -> Self {
         self.disabled = disabled;
         self
     }
 }
 
-impl FixedWidth for Button {
+impl FixedWidth for ButtonBase {
     fn width(mut self, width: gpui::DefiniteLength) -> Self {
         self.base = self.base.w(width);
         self
@@ -101,31 +95,25 @@ impl FixedWidth for Button {
     }
 }
 
-impl ParentElement for Button {
-    fn extend(&mut self, elements: impl IntoIterator<Item = AnyElement>) {
-        self.children.extend(elements);
-    }
-}
-
-impl Styled for Button {
+impl Styled for ButtonBase {
     fn style(&mut self) -> &mut gpui::StyleRefinement {
         self.base.style()
     }
 }
 
-impl InteractiveElement for Button {
+impl InteractiveElement for ButtonBase {
     fn interactivity(&mut self) -> &mut gpui::Interactivity {
         self.base.interactivity()
     }
 }
 
-impl From<Button> for AnyElement {
-    fn from(button: Button) -> Self {
+impl From<ButtonBase> for AnyElement {
+    fn from(button: ButtonBase) -> Self {
         button.into_any_element()
     }
 }
 
-impl RenderOnce for Button {
+impl RenderOnce for ButtonBase {
     fn render(self, cx: &mut WindowContext) -> impl IntoElement {
         self.base
             .id(self.id)
@@ -157,7 +145,12 @@ impl RenderOnce for Button {
                             this.child(trailing.w_5().h_5().text_color(colors.text))
                         })
                 } else {
-                    let colors = self.appearance.base(cx);
+                    let colors = if self.selected {
+                        self.appearance.selected(cx)
+                    } else {
+                        self.appearance.base(cx)
+                    };
+
                     this.text_color(colors.text)
                         .bg(colors.bg)
                         .border_color(colors.outline)
@@ -180,7 +173,7 @@ impl RenderOnce for Button {
     }
 }
 
-struct ButtonStyle {
+pub(super) struct ButtonStyle {
     bg: Rgba,
     text: Rgba,
     outline: Rgba,
@@ -240,6 +233,28 @@ impl ButtonAppearance {
     }
 
     fn disabled(&self, cx: &WindowContext) -> ButtonStyle {
+        let colors = Theme::of(cx).colors();
+
+        match self {
+            ButtonAppearance::Primary => ButtonStyle {
+                bg: colors.neutral_disabled(),
+                text: colors.on_neutral_disabled(),
+                outline: rgba(0xffffff00),
+            },
+            ButtonAppearance::Outline => ButtonStyle {
+                bg: colors.neutral_disabled(),
+                text: colors.on_neutral_disabled(),
+                outline: colors.neutral_stroke_disabled(),
+            },
+            ButtonAppearance::Subtle => ButtonStyle {
+                bg: rgba(0xffffff00),
+                text: colors.on_neutral_disabled(),
+                outline: rgba(0xffffff00),
+            },
+        }
+    }
+
+    fn selected(&self, cx: &WindowContext) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {

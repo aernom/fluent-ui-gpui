@@ -146,7 +146,7 @@ impl TextElement {
                         ),
                         size(px(1.5), line_height),
                     ),
-                    cx.theme().colors().primary_compound(),
+                    cx.theme().colors().primary(),
                 ))
             };
         }
@@ -480,7 +480,7 @@ impl Element for TextElement {
 
         // Paint selections
         if let Some(path) = prepaint.selection_path.take() {
-            cx.paint_path(path, cx.theme().colors().primary_compound());
+            cx.paint_path(path, cx.theme().colors().primary());
         }
 
         // Paint multi line text

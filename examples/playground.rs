@@ -32,8 +32,8 @@ impl Render for Playground {
                 div()
                     .id("click me!")
                     .size_40()
-                    .text_color(colors.on_primary_compound())
-                    .bg(colors.primary_compound())
+                    .text_color(colors.on_primary())
+                    .bg(colors.primary())
                     .child("Playground")
                     .on_click(cx.listener(|_, _, cx| {
                         let paths = cx.prompt_for_paths(PathPromptOptions {
