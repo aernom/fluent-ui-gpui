@@ -1,7 +1,17 @@
-use gpui::*;
-use luna::*;
+use std::path::PathBuf;
 
-struct Playground {}
+use fluent::*;
+use gpui::*;
+
+struct Playground {
+    files: Vec<PathBuf>,
+}
+
+impl Playground {
+    fn new() -> Self {
+        Self { files: vec![] }
+    }
+}
 
 impl Render for Playground {
     fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
@@ -20,10 +30,37 @@ impl Render for Playground {
             )
             .child(
                 div()
+                    .id("click me!")
                     .size_40()
                     .text_color(colors.on_primary_compound())
                     .bg(colors.primary_compound())
-                    .child("Playground"),
+                    .child("Playground")
+                    .on_click(cx.listener(|_, _, cx| {
+                        let paths = cx.prompt_for_paths(PathPromptOptions {
+                            files: true,
+                            directories: false,
+                            multiple: true,
+                        });
+
+                        cx.spawn(|this, mut cx| async move {
+                            if let Ok(Ok(Some(paths))) = paths.await {
+                                this.upgrade()
+                                    .unwrap()
+                                    .update(&mut cx, |this, _| {
+                                        this.files.extend(paths);
+                                    })
+                                    .ok();
+                            }
+                        })
+                        .detach();
+                    })),
+            )
+            .child(
+                self.files
+                    .iter()
+                    .fold(v_flex().items_start(), |stack, file| {
+                        stack.child(file.display().to_string())
+                    }),
             )
     }
 }
@@ -47,7 +84,7 @@ fn main() {
                 }),
                 ..Default::default()
             },
-            |cx| cx.new_view(|_cx| Playground {}),
+            |cx| cx.new_view(|_cx| Playground::new()),
         )
         .unwrap();
     });

@@ -1,5 +1,5 @@
+use fluent::{v_flex, Divider, DividerStyle};
 use gpui::{rgb, Div, ParentElement, Styled};
-use luna::{v_flex, Divider, DividerStyle};
 
 pub fn dividers_page() -> Div {
     v_flex().w_full().gap_4().children([

@@ -4,8 +4,8 @@ mod stories;
 use std::path::PathBuf;
 
 use assets::Assets;
+use fluent::*;
 use gpui::*;
-use luna::*;
 use stories::*;
 
 #[derive(Debug, PartialEq, Eq)]
@@ -41,12 +41,12 @@ impl Render for Storybook {
             .child(TitleBar::new().child(div().text_sm().child("This is a custom TitleBar")))
             .child(
                 h_flex().mb_6().children([
-                    luna::Tab::new(Story::Button, "Buttons", self.selected_tab == Story::Button)
+                    Tab::new(Story::Button, "Buttons", self.selected_tab == Story::Button)
                         .on_click(cx.listener(|view, _, cx| {
                             view.selected_tab = Story::Button;
                             cx.notify();
                         })),
-                    luna::Tab::new(
+                    Tab::new(
                         Story::Divider,
                         "Dividers",
                         self.selected_tab == Story::Divider,
@@ -55,12 +55,13 @@ impl Render for Storybook {
                         view.selected_tab = Story::Divider;
                         cx.notify();
                     })),
-                    luna::Tab::new(Story::Input, "Inputs", self.selected_tab == Story::Input)
-                        .on_click(cx.listener(|view, _, cx| {
+                    Tab::new(Story::Input, "Inputs", self.selected_tab == Story::Input).on_click(
+                        cx.listener(|view, _, cx| {
                             view.selected_tab = Story::Input;
                             cx.notify();
-                        })),
-                    luna::Tab::new("disabled", "Disabled", false).disabled(true),
+                        }),
+                    ),
+                    Tab::new("disabled", "Disabled", false).disabled(true),
                 ]),
             )
             .child(match self.selected_tab {

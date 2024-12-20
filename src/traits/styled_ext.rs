@@ -1,3 +1,13 @@
-use gpui::{Styled, WindowContext};
+use gpui::Styled;
 
-use crate::ThemeProvider;
+pub trait StyledExt: Styled + Sized {
+    fn h_flex(self) -> Self {
+        self.flex().flex_row().items_center()
+    }
+
+    fn v_flex(self) -> Self {
+        self.flex().flex_col()
+    }
+}
+
+impl<S: Styled> StyledExt for S {}

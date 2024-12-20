@@ -1,5 +1,5 @@
+use fluent::{h_flex, v_flex, Button, ButtonAppearance, ButtonShape, Disableable};
 use gpui::{black, div, svg, Div, ParentElement, Styled};
-use luna::{h_flex, v_flex, Button, ButtonAppearance, ButtonShape, Disableable};
 
 pub fn buttons_page() -> Div {
     v_flex()
