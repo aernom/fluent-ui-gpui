@@ -200,7 +200,7 @@ impl ButtonAppearance {
             ButtonAppearance::Outline => ButtonStyle {
                 bg: colors.neutral(),
                 text: colors.on_neutral(),
-                outline: colors.neutral_stroke(),
+                outline: colors.stroke_neutral(),
             },
             ButtonAppearance::Subtle => ButtonStyle {
                 bg: colors.subtle(),
@@ -222,7 +222,7 @@ impl ButtonAppearance {
             ButtonAppearance::Outline => ButtonStyle {
                 bg: colors.neutral_hover(),
                 text: colors.on_neutral(),
-                outline: colors.neutral_stroke_hover(),
+                outline: colors.stroke_neutral_hover(),
             },
             ButtonAppearance::Subtle => ButtonStyle {
                 bg: colors.subtle_hover(),
@@ -244,7 +244,7 @@ impl ButtonAppearance {
             ButtonAppearance::Outline => ButtonStyle {
                 bg: colors.neutral_disabled(),
                 text: colors.on_neutral_disabled(),
-                outline: colors.neutral_stroke_disabled(),
+                outline: colors.stroke_neutral_disabled(),
             },
             ButtonAppearance::Subtle => ButtonStyle {
                 bg: rgba(0xffffff00),
@@ -266,7 +266,7 @@ impl ButtonAppearance {
             ButtonAppearance::Outline => ButtonStyle {
                 bg: colors.neutral_disabled(),
                 text: colors.on_neutral_disabled(),
-                outline: colors.neutral_stroke_disabled(),
+                outline: colors.stroke_neutral_disabled(),
             },
             ButtonAppearance::Subtle => ButtonStyle {
                 bg: rgba(0xffffff00),

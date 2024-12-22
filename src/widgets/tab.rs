@@ -74,9 +74,9 @@ impl RenderOnce for Tab {
                         .left_3()
                         .right_3()
                         .map(|this| match self.selected {
-                            true => this.visible().bg(colors.primary_stroke()),
+                            true => this.visible().bg(colors.stroke_primary()),
                             false => this.group_hover("tab_area", |this| {
-                                this.visible().bg(colors.neutral_stroke())
+                                this.visible().bg(colors.stroke_neutral())
                             }),
                         }),
                 )

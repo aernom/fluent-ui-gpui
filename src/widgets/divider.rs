@@ -75,10 +75,10 @@ impl DividerStyle {
         let colors = cx.theme().colors();
 
         match self {
-            DividerStyle::Default => colors.neutral_stroke_dim().into(),
-            DividerStyle::Subtle => colors.neutral_stroke_subtle().into(),
-            DividerStyle::Strong => colors.neutral_stroke().into(),
-            DividerStyle::Primary => colors.primary_stroke().into(),
+            DividerStyle::Default => colors.stroke_neutral_dim().into(),
+            DividerStyle::Subtle => colors.stroke_neutral_subtle().into(),
+            DividerStyle::Strong => colors.stroke_neutral().into(),
+            DividerStyle::Primary => colors.stroke_primary().into(),
             DividerStyle::Custom(hsla) => *hsla,
         }
     }

@@ -1094,10 +1094,10 @@ impl Render for TextInput {
                 } else {
                     colors.neutral()
                 })
-                .border_color(colors.neutral_stroke())
+                .border_color(colors.stroke_neutral())
                 .border_1()
                 .rounded(px(4.))
-                .when(focused, |this| this.border_color(colors.primary_stroke()))
+                .when(focused, |this| this.border_color(colors.stroke_primary()))
                 .when(prefix.is_none(), |this| this.pl_2())
                 .when(suffix.is_none(), |this| this.pr_2())
             })
