@@ -1,5 +1,5 @@
 use gpui::{
-    relative, AnyElement, ClickEvent, ElementId, InteractiveElement, IntoElement, RenderOnce,
+    px, relative, AnyElement, ClickEvent, ElementId, InteractiveElement, IntoElement, RenderOnce,
     Styled, Svg, WindowContext,
 };
 
@@ -15,7 +15,7 @@ pub struct Button {
 impl Button {
     pub fn new(id: impl Into<ElementId>) -> Self {
         Self {
-            base: ButtonBase::new(id),
+            base: ButtonBase::new(id).min_w(px(96.)),
         }
     }
 

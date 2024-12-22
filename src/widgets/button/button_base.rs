@@ -123,10 +123,10 @@ impl RenderOnce for ButtonBase {
             .justify_center()
             .px(px(12.))
             .py(px(5.))
-            .gap_x(px(5.))
+            .gap_x(px(8.))
             .text_size(px(14.))
             .line_height(px(20.))
-            .font_weight(FontWeight::MEDIUM)
+            .font_weight(FontWeight::NORMAL)
             .rounded(self.shape.radius())
             .border_1()
             .cursor_pointer()
@@ -162,11 +162,11 @@ impl RenderOnce for ButtonBase {
                         })
                         .active(|style| style.opacity(0.8))
                         .when_some(self.leading, |this, leading| {
-                            this.child(leading.size_5().text_color(colors.text))
+                            this.child(leading.size_4().text_color(colors.text))
                         })
                         .when_some(self.label, |this, label| this.child(label))
                         .when_some(self.trailing, |this, trailing| {
-                            this.child(trailing.size_5().text_color(colors.text))
+                            this.child(trailing.size_4().text_color(colors.text))
                         })
                 }
             })

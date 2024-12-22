@@ -1,5 +1,5 @@
-mod color_scheme;
-pub use color_scheme::*;
+mod colors;
+pub use colors::*;
 
 use gpui::{AppContext, Global, WindowAppearance};
 use std::ops::Deref;
