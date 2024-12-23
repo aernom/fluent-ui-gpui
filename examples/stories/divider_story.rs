@@ -6,7 +6,7 @@ pub fn dividers_page() -> Div {
         Divider::horizontal(),
         Divider::horizontal().style(DividerStyle::Subtle),
         Divider::horizontal().style(DividerStyle::Strong),
-        Divider::horizontal().style(DividerStyle::Primary),
+        Divider::horizontal().style(DividerStyle::Accent),
         Divider::horizontal().style(DividerStyle::Custom(rgb(0xc239b3).into())),
     ])
 }

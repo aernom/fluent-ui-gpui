@@ -1097,7 +1097,7 @@ impl Render for TextInput {
                 .border_color(colors.stroke_neutral())
                 .border_1()
                 .rounded(px(4.))
-                .when(focused, |this| this.border_color(colors.stroke_primary()))
+                .when(focused, |this| this.border_color(colors.stroke_accent()))
                 .when(prefix.is_none(), |this| this.pl_2())
                 .when(suffix.is_none(), |this| this.pr_2())
             })

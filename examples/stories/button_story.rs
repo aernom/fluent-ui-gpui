@@ -8,10 +8,10 @@ pub fn buttons_page() -> Div {
             h_flex().gap_2().children([
                 Button::new(1)
                     .label("Primary")
-                    .appearance(ButtonAppearance::Primary),
+                    .appearance(ButtonAppearance::Accent),
                 Button::new(2)
                     .label("Outline")
-                    .appearance(ButtonAppearance::Outline),
+                    .appearance(ButtonAppearance::Neutral),
                 Button::new(3)
                     .label("Subtle")
                     .appearance(ButtonAppearance::Subtle),
@@ -22,11 +22,11 @@ pub fn buttons_page() -> Div {
                 Button::new(4)
                     .label("Primary Disabled")
                     .leading(svg().path("send.svg"))
-                    .appearance(ButtonAppearance::Primary)
+                    .appearance(ButtonAppearance::Accent)
                     .disabled(true),
                 Button::new(5)
                     .label("Outline Disabled")
-                    .appearance(ButtonAppearance::Outline)
+                    .appearance(ButtonAppearance::Neutral)
                     .disabled(true),
                 Button::new(6)
                     .label("Subtle Disabled")
@@ -39,11 +39,11 @@ pub fn buttons_page() -> Div {
                 Button::new(7).label("Rounded (Default)"),
                 Button::new(8)
                     .label("Circular")
-                    .appearance(ButtonAppearance::Outline)
+                    .appearance(ButtonAppearance::Neutral)
                     .shape(ButtonShape::Circular),
                 Button::new(9)
                     .label("Square")
-                    .appearance(ButtonAppearance::Outline)
+                    .appearance(ButtonAppearance::Neutral)
                     .shape(ButtonShape::Square),
             ]),
         )

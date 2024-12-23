@@ -1,0 +1,280 @@
+/* Color styles */
+--light---text---primary: rgba(0, 0, 0, 0.8956000208854675);
+--light---text---secondary: rgba(0, 0, 0, 0.6062999963760376);
+--light---text---tertiary: rgba(0, 0, 0, 0.4458000063896179);
+--light---text---disabled: rgba(0, 0, 0, 0.3614000082015991);
+--light---accent--text---primary: rgba(0, 62, 146, 1);
+--light---accent--text---secondary: rgba(0, 26, 104, 1);
+--light---accent--text---tertiary: rgba(0, 95, 184, 1);
+--light---accent--text---disabled: rgba(0, 0, 0, 0.4);
+--light---text--on--accent---primary: rgba(255, 255, 255, 1);
+--light---text--on--accent---secondary: rgba(255, 255, 255, 0.7);
+--light---text--on--accent---disabled: rgba(255, 255, 255, 1);
+--light---text--on--accent---selected--text: rgba(255, 255, 255, 1);
+--light---control---transparent: rgba(255, 255, 255, 0);
+--light---control---default: rgba(255, 255, 255, 0.699999988079071);
+--light---control---secondary: rgba(249, 249, 249, 0.5);
+--light---control---tertiary: rgba(249, 249, 249, 0.30000001192092896);
+--light---control---quarternary: rgba(243, 243, 243, 0.7599999904632568);
+--light---control---input--active: rgba(255, 255, 255, 1);
+--light---control---disabled: rgba(249, 249, 249, 0.30000001192092896);
+--light---control--strong---default: rgba(0, 0, 0, 0.4458000063896179);
+--light---control--strong---disabled: rgba(0, 0, 0, 0.3172999918460846);
+--light---subtle---transparent: rgba(255, 255, 255, 0);
+--light---subtle---secondary: rgba(0, 0, 0, 0.037300001829862595);
+--light---subtle---tertiary: rgba(0, 0, 0, 0.02410000003874302);
+--light---subtle---disabled: rgba(0, 0, 0, 0);
+--light---control--solid---default: rgba(255, 255, 255, 1);
+--light---control--alt---transparent: rgba(255, 255, 255, 0);
+--light---control--alt---secondary: rgba(0, 0, 0, 0.02410000003874302);
+--light---control--alt---tertiary: rgba(0, 0, 0, 0.05779999867081642);
+--light---control--alt---quarternary: rgba(0, 0, 0, 0.09239999949932098);
+--light---control--alt---disabled: rgba(255, 255, 255, 0);
+--light---accent---default: rgba(0, 95, 184, 1);
+--light---accent---secondary: rgba(0, 95, 184, 0.8999999761581421);
+--light---accent---tertiary: rgba(0, 95, 184, 0.800000011920929);
+--light---accent---disabled: rgba(0, 0, 0, 0.21690000593662262);
+--light---accent---selected--text--background: rgba(0, 120, 212, 1);
+--light---system---critical: rgba(196, 43, 28, 1);
+--light---system---success: rgba(15, 123, 15, 1);
+--light---system---attention: rgba(0, 95, 183, 1);
+--light---system---caution: rgba(157, 93, 0, 1);
+--light---system---attention--background: rgba(246, 246, 246, 0.5);
+--light---system---success--background: rgba(223, 246, 221, 1);
+--light---system---caution--background: rgba(255, 244, 206, 1);
+--light---system---critical--background: rgba(253, 231, 233, 1);
+--light---system---neutral: rgba(0, 0, 0, 0.4458000063896179);
+--light---system---neutral--background: rgba(0, 0, 0, 0.02410000003874302);
+--light---system---solid--neutral: rgba(138, 138, 138, 1);
+--light---system---solid--attention--background: rgba(247, 247, 247, 1);
+--light---system---solid--neutral--background: rgba(243, 243, 243, 1);
+--light---control--on--image---default: rgba(255, 255, 255, 0.7900000214576721);
+--light---control--on--image---secondary: rgba(243, 243, 243, 1);
+--light---control--on--image---tertiary: rgba(235, 235, 235, 1);
+--light---control--on--image---disabled: rgba(255, 255, 255, 0);
+--light---control--stroke---default: rgba(0, 0, 0, 0.05779999867081642);
+--light---control--stroke---secondary: rgba(0, 0, 0, 0.16220000386238098);
+--light---control--stroke---on--accent--default: rgba(
+    255,
+    255,
+    255,
+    0.07999999821186066
+);
+--light---control--stroke---on--accent--secondary: rgba(
+    0,
+    0,
+    0,
+    0.4000000059604645
+);
+--light---control--stroke---on--accent--tertiary: rgba(
+    0,
+    0,
+    0,
+    0.21690000593662262
+);
+--light---control--stroke---on--accent--disabled: rgba(
+    0,
+    0,
+    0,
+    0.05779999867081642
+);
+--light---control--stroke---for--strong--fill--when--on--image: rgba(
+    255,
+    255,
+    255,
+    0.3499999940395355
+);
+--light---control--strong--stroke---default: rgba(0, 0, 0, 0.6062999963760376);
+--light---control--strong--stroke---disabled: rgba(
+    0,
+    0,
+    0,
+    0.21690000593662262
+);
+--light---card--stroke---default: rgba(0, 0, 0, 0.05779999867081642);
+--light---card--stroke---default--solid: rgba(235, 235, 235, 1);
+--light---divider--stroke---default: rgba(0, 0, 0, 0.08030000329017639);
+--light---surface--stroke---default: rgba(117, 117, 117, 0.4000000059604645);
+--light---surface--stroke---flyout: rgba(0, 0, 0, 0.05779999867081642);
+--light---focus--stroke---outer: rgba(0, 0, 0, 0.8956000208854675);
+--light---focus--stroke---inner: rgba(255, 255, 255, 1);
+--light---background---card--background---default: rgba(
+    255,
+    255,
+    255,
+    0.699999988079071
+);
+--light---background---card--background---secondary: rgba(246, 246, 246, 0.5);
+--light---background---card--background---tertiary: rgba(255, 255, 255, 1);
+--light---background---smoke---default: rgba(0, 0, 0, 0.30000001192092896);
+--light---background---layer---default: rgba(255, 255, 255, 0.5);
+--light---background---layer---alt: rgba(255, 255, 255, 1);
+--light---background---layer--on--acrylic---default: rgba(255, 255, 255, 0.25);
+--light---background---layer--on--accent--acrylic---default: rgba(
+    255,
+    255,
+    255,
+    0.25
+);
+--light---background---layer--on--mica--base--alt---default: rgba(
+    255,
+    255,
+    255,
+    0.699999988079071
+);
+--light---background---layer--on--mica--base--alt---transparent: rgba(
+    255,
+    255,
+    255,
+    0
+);
+--light---background---layer--on--mica--base--alt---secondary: rgba(
+    0,
+    0,
+    0,
+    0.037300001829862595
+);
+--light---background---layer--on--mica--base--alt---tertiary: rgba(
+    249,
+    249,
+    249,
+    1
+);
+--light---background---acrylic--background---default: rgba(
+    252,
+    252,
+    252,
+    0.8500000238418579
+);
+--light---background---acrylic--background---base: rgba(
+    243,
+    243,
+    243,
+    0.8999999761581421
+);
+--light---background---accent--acrylic--background---default: rgba(
+    153,
+    235,
+    255,
+    0.8999999761581421
+);
+--light---background---accent--acrylic--background---base: rgba(
+    153,
+    235,
+    255,
+    0.8999999761581421
+);
+--light---background---mica--background---base: rgba(243, 243, 243, 1);
+--light---background---mica--background---base--alt: rgba(218, 218, 218, 1);
+--light---background---solid--background---base: rgba(243, 243, 243, 1);
+--light---background---solid--background---base--alt: rgba(218, 218, 218, 1);
+--light---background---solid--background---secondary: rgba(238, 238, 238, 1);
+--light---background---solid--background---tertiary: rgba(249, 249, 249, 1);
+--light---background---solid--background---quarternary: rgba(255, 255, 255, 1);
+--light---background---solid--background---quinary: rgba(253, 253, 253, 1);
+--light---background---solid--background---senary: rgba(255, 255, 255, 1);
+
+--dark---text---primary: rgba(255, 255, 255, 1);
+--dark---text---secondary: rgba(255, 255, 255, 0.7860000133514404);
+--dark---text---tertiary: rgba(255, 255, 255, 0.5442000031471252);
+--dark---text---disabled: rgba(255, 255, 255, 0.3628000020980835);
+--dark---accent--text---primary: rgba(153, 235, 255, 1);
+--dark---accent--text---secondary: rgba(153, 235, 255, 1);
+--dark---accent--text---tertiary: rgba(96, 205, 255, 1);
+--dark---accent--text---disabled: rgba(255, 255, 255, 0.3628000020980835);
+--dark---text--on--accent---primary: rgba(0, 0, 0, 1);
+--dark---text--on--accent---secondary: rgba(0, 0, 0, 0.5);
+--dark---text--on--accent---disabled: rgba(255, 255, 255, 0.5302000045776367);
+--dark---text--on--accent---selected--text: rgba(255, 255, 255, 1);
+--dark---control---transparent: rgba(255, 255, 255, 0);
+--dark---control---default: rgba(255, 255, 255, 0.060499999672174454);
+--dark---control---secondary: rgba(255, 255, 255, 0.08370000123977661);
+--dark---control---tertiary: rgba(255, 255, 255, 0.032600000500679016);
+--dark---control---quarternary: rgba(255, 255, 255, 0.060499999672174454);
+--dark---control---disabled: rgba(255, 255, 255, 0.04190000146627426);
+--dark---control---input--active: rgba(30, 30, 30, 0.699999988079071);
+--dark---control--strong---default: rgba(255, 255, 255, 0.5442000031471252);
+--dark---control--strong---disabled: rgba(255, 255, 255, 0.24650000035762787);
+--dark---control--alt---transparent: rgba(255, 255, 255, 0);
+--dark---control--alt---secondary: rgba(0, 0, 0, 0.10000000149011612);
+--dark---control--alt---tertiary: rgba(255, 255, 255, 0.04190000146627426);
+--dark---control--alt---quarternary: rgba(255, 255, 255, 0.0697999969124794);
+--dark---control--alt---disabled: rgba(255, 255, 255, 0);
+--dark---subtle---transparent: rgba(255, 255, 255, 0);
+--dark---subtle---secondary: rgba(255, 255, 255, 0.060499999672174454);
+--dark---subtle---tertiary: rgba(255, 255, 255, 0.04190000146627426);
+--dark---subtle---disabled: rgba(255, 255, 255, 0);
+--dark---accent---default: rgba(96, 205, 255, 1);
+--dark---accent---secondary: rgba(96, 205, 255, 0.8999999761581421);
+--dark---accent---tertiary: rgba(96, 205, 255, 0.800000011920929);
+--dark---accent---disabled: rgba(255, 255, 255, 0.15809999406337738);
+--dark---accent---selected--text--background: rgba(0, 120, 212, 1);
+--dark---control--solid---default: rgba(69, 69, 69, 1);
+--dark---system---critical: rgba(255, 153, 164, 1);
+--dark---system---success: rgba(108, 203, 95, 1);
+--dark---system---attention: rgba(96, 205, 255, 1);
+--dark---system---caution: rgba(252, 225, 0, 1);
+--dark---system---attention--background: rgba(
+    255,
+    255,
+    255,
+    0.032600000500679016
+);
+--dark---system---success--background: rgba(57, 61, 27, 1);
+--dark---system---caution--background: rgba(67, 53, 25, 1);
+--dark---system---critical--background: rgba(68, 39, 38, 1);
+--dark---system---neutral: rgba(255, 255, 255, 0.5442000031471252);
+--dark---system---neutral--background: rgba(
+    255,
+    255,
+    255,
+    0.032600000500679016
+);
+--dark---system---solid--attention--background: rgba(46, 46, 46, 1);
+--dark---system---solid--neutral: rgba(157, 157, 157, 1);
+--dark---system---solid--neutral--background: rgba(46, 46, 46, 1);
+--dark---control--on--image---default: rgba(28, 28, 28, 0.699999988079071);
+--dark---control--on--image---secondary: rgba(26, 26, 26, 1);
+--dark---control--on--image---tertiary: rgba(19, 19, 19, 1);
+--dark---control--on--image---disabled: rgba(30, 30, 30, 0);
+--dark---control--stroke---default: rgba(255, 255, 255, 0.0697999969124794);
+--dark---control--stroke---secondary: rgba(255, 255, 255, 0.09300000220537186);
+--dark---control--stroke---on--accent--default: rgba(
+    255,
+    255,
+    255,
+    0.07999999821186066
+);
+--dark---control--stroke---on--accent--secondary: rgba(
+    0,
+    0,
+    0,
+    0.14000000059604645
+);
+--dark---control--stroke---on--accent--tertiary: rgba(
+    0,
+    0,
+    0,
+    0.21690000593662262
+);
+--dark---control--stroke---on--accent--disabled: rgba(
+    0,
+    0,
+    0,
+    0.20000000298023224
+);
+--dark---control--stroke---for--strong--fill--when--on--image: rgba(
+    0,
+    0,
+    0,
+    0.4
+);
+--dark---control--strong--stroke---default: rgba(255, 255, 255, 0.6);
+--dark---control--strong--stroke---disabled: rgba(255, 255, 255, 0.16);
+--dark---divider--stroke---default: rgba(255, 255, 255, 0.08370000123977661);
+--dark---surface--stroke---default: rgba(117, 117, 117, 0.4000000059604645);
+--dark---surface--stroke---flyout: rgba(0, 0, 0, 0.20000000298023224);
+--dark---card--stroke---default: rgba(0, 0, 0, 0.10000000149011612);
+--dark---card--stroke---default--solid: rgba(28, 28, 28, 1);
+--dark---focus--stroke---outer: rgba(255, 255, 255, 1);
+--dark---focus--stroke---inner: rgba(0, 0, 0, 0.699999988079071);

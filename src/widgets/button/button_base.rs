@@ -181,9 +181,9 @@ pub(super) struct ButtonStyle {
 
 #[derive(Clone, Copy, PartialEq, Eq, Default)]
 pub enum ButtonAppearance {
+    Accent,
     #[default]
-    Primary,
-    Outline,
+    Neutral,
     Subtle,
 }
 
@@ -192,12 +192,12 @@ impl ButtonAppearance {
         let colors = Theme::of(cx).colors();
 
         match self {
-            ButtonAppearance::Primary => ButtonStyle {
-                bg: colors.primary(),
-                text: colors.on_primary(),
+            ButtonAppearance::Accent => ButtonStyle {
+                bg: colors.accent(),
+                text: colors.on_accent(),
                 outline: rgba(0xffffff00),
             },
-            ButtonAppearance::Outline => ButtonStyle {
+            ButtonAppearance::Neutral => ButtonStyle {
                 bg: colors.neutral(),
                 text: colors.on_neutral(),
                 outline: colors.stroke_neutral(),
@@ -214,19 +214,19 @@ impl ButtonAppearance {
         let colors = Theme::of(cx).colors();
 
         match self {
-            ButtonAppearance::Primary => ButtonStyle {
-                bg: colors.primary_hover(),
-                text: colors.on_primary(),
+            ButtonAppearance::Accent => ButtonStyle {
+                bg: colors.accent_hover(),
+                text: colors.on_accent(),
                 outline: rgba(0xffffff00),
             },
-            ButtonAppearance::Outline => ButtonStyle {
+            ButtonAppearance::Neutral => ButtonStyle {
                 bg: colors.neutral_hover(),
                 text: colors.on_neutral(),
-                outline: colors.stroke_neutral_hover(),
+                outline: colors.stroke_neutral(),
             },
             ButtonAppearance::Subtle => ButtonStyle {
                 bg: colors.subtle_hover(),
-                text: colors.on_neutral(),
+                text: colors.on_subtle(),
                 outline: rgba(0xffffff00),
             },
         }
@@ -236,19 +236,19 @@ impl ButtonAppearance {
         let colors = Theme::of(cx).colors();
 
         match self {
-            ButtonAppearance::Primary => ButtonStyle {
-                bg: colors.neutral_disabled(),
-                text: colors.on_neutral_disabled(),
+            ButtonAppearance::Accent => ButtonStyle {
+                bg: colors.accent_disabled(),
+                text: colors.on_accent_disabled(),
                 outline: rgba(0xffffff00),
             },
-            ButtonAppearance::Outline => ButtonStyle {
+            ButtonAppearance::Neutral => ButtonStyle {
                 bg: colors.neutral_disabled(),
                 text: colors.on_neutral_disabled(),
                 outline: colors.stroke_neutral_disabled(),
             },
             ButtonAppearance::Subtle => ButtonStyle {
-                bg: rgba(0xffffff00),
-                text: colors.on_neutral_disabled(),
+                bg: colors.subtle(),
+                text: colors.on_subtle_disabled(),
                 outline: rgba(0xffffff00),
             },
         }
@@ -258,12 +258,12 @@ impl ButtonAppearance {
         let colors = Theme::of(cx).colors();
 
         match self {
-            ButtonAppearance::Primary => ButtonStyle {
+            ButtonAppearance::Accent => ButtonStyle {
                 bg: colors.neutral_disabled(),
                 text: colors.on_neutral_disabled(),
                 outline: rgba(0xffffff00),
             },
-            ButtonAppearance::Outline => ButtonStyle {
+            ButtonAppearance::Neutral => ButtonStyle {
                 bg: colors.neutral_disabled(),
                 text: colors.on_neutral_disabled(),
                 outline: colors.stroke_neutral_disabled(),

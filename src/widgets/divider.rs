@@ -66,7 +66,7 @@ pub enum DividerStyle {
     Default,
     Subtle,
     Strong,
-    Primary,
+    Accent,
     Custom(Hsla),
 }
 
@@ -78,7 +78,7 @@ impl DividerStyle {
             DividerStyle::Default => colors.stroke_neutral_dim().into(),
             DividerStyle::Subtle => colors.stroke_neutral_subtle().into(),
             DividerStyle::Strong => colors.stroke_neutral().into(),
-            DividerStyle::Primary => colors.stroke_primary().into(),
+            DividerStyle::Accent => colors.stroke_accent().into(),
             DividerStyle::Custom(hsla) => *hsla,
         }
     }

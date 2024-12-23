@@ -75,7 +75,7 @@ impl Render for Storybook {
                     .w_24()
                     .h_24()
                     .mt_4()
-                    .text_color(cx.theme().colors().primary()),
+                    .text_color(cx.theme().colors().accent()),
             )
     }
 }
@@ -84,7 +84,7 @@ fn main() {
     App::new()
         .with_assets(Assets::from(PathBuf::from("examples/assets")))
         .run(|cx: &mut AppContext| {
-            cx.set_global(Theme::dark());
+            cx.set_global(Theme::light());
             cx.activate(true);
 
             cx.open_window(
