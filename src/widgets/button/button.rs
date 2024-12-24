@@ -5,7 +5,7 @@ use gpui::{
 
 use crate::{Clickable, Disableable, FixedWidth};
 
-use super::button_base::{ButtonAppearance, ButtonBase, ButtonShape};
+use super::button_base::{ButtonAppearance, ButtonBase, ButtonShape, ButtonSize};
 
 #[derive(IntoElement)]
 pub struct Button {
@@ -41,6 +41,11 @@ impl Button {
 
     pub fn shape(mut self, shape: ButtonShape) -> Self {
         self.base = self.base.shape(shape);
+        self
+    }
+
+    pub fn size(mut self, size: ButtonSize) -> Self {
+        self.base = self.base.size(size);
         self
     }
 }

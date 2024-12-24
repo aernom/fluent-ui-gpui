@@ -5,11 +5,15 @@ use gpui::*;
 
 struct Playground {
     files: Vec<PathBuf>,
+    selected: bool,
 }
 
 impl Playground {
     fn new() -> Self {
-        Self { files: vec![] }
+        Self {
+            files: vec![],
+            selected: false,
+        }
     }
 }
 
@@ -61,6 +65,21 @@ impl Render for Playground {
                     .fold(v_flex().items_start(), |stack, file| {
                         stack.child(file.display().to_string())
                     }),
+            )
+            .child(div().p_12().child(if self.selected {
+                "SELECTED!"
+            } else {
+                "NOT SELECTED!"
+            }))
+            .child(
+                ToggleButton::new("toggle button")
+                    .mt_4()
+                    .label("Togglami tutto")
+                    .toggle_state(self.selected)
+                    .on_click(cx.listener(|view, _, cx| {
+                        view.selected = !view.selected;
+                        cx.notify();
+                    })),
             )
     }
 }

@@ -1,10 +1,10 @@
 use gpui::{
     div, prelude::FluentBuilder, px, relative, rgba, AbsoluteLength, AnyElement, ClickEvent,
-    CursorStyle, Div, ElementId, FontWeight, InteractiveElement, IntoElement, ParentElement,
-    RenderOnce, Rgba, StatefulInteractiveElement, Styled, Svg, WindowContext,
+    CursorStyle, Div, ElementId, FontWeight, InteractiveElement, IntoElement, MouseButton,
+    ParentElement, RenderOnce, Rgba, StatefulInteractiveElement, Styled, Svg, WindowContext,
 };
 
-use crate::{BorderRadius, Clickable, Disableable, FixedWidth, Theme};
+use crate::{BorderRadius, Clickable, Disableable, FixedWidth, Theme, Toggleable};
 
 #[derive(IntoElement)]
 pub(super) struct ButtonBase {
@@ -15,8 +15,9 @@ pub(super) struct ButtonBase {
     label: Option<AnyElement>,
     disabled: bool,
     appearance: ButtonAppearance,
-    pub(super) selected: bool,
+    selected: bool,
     shape: ButtonShape,
+    size: ButtonSize,
     on_click: Option<Box<dyn Fn(&ClickEvent, &mut WindowContext) + 'static>>,
     cursor_style: CursorStyle,
 }
@@ -24,7 +25,7 @@ pub(super) struct ButtonBase {
 impl ButtonBase {
     pub(super) fn new(id: impl Into<ElementId>) -> Self {
         Self {
-            base: div().flex_shrink_0(),
+            base: div().flex_shrink_0().px(px(12.)).py(px(5.)),
             id: id.into(),
             leading: None,
             trailing: None,
@@ -33,6 +34,7 @@ impl ButtonBase {
             appearance: ButtonAppearance::default(),
             selected: false,
             shape: ButtonShape::default(),
+            size: ButtonSize::default(),
             on_click: None,
             cursor_style: CursorStyle::PointingHand,
         }
@@ -62,6 +64,11 @@ impl ButtonBase {
         self.shape = shape;
         self
     }
+
+    pub(super) fn size(mut self, size: ButtonSize) -> Self {
+        self.size = size;
+        self
+    }
 }
 
 impl Clickable for ButtonBase {
@@ -79,6 +86,13 @@ impl Clickable for ButtonBase {
 impl Disableable for ButtonBase {
     fn disabled(mut self, disabled: bool) -> Self {
         self.disabled = disabled;
+        self
+    }
+}
+
+impl Toggleable for ButtonBase {
+    fn toggle_state(mut self, selected: bool) -> Self {
+        self.selected = selected;
         self
     }
 }
@@ -121,15 +135,22 @@ impl RenderOnce for ButtonBase {
             .flex_none()
             .items_center()
             .justify_center()
-            .px(px(12.))
-            .py(px(5.))
             .gap_x(px(8.))
             .text_size(px(14.))
             .line_height(px(20.))
             .font_weight(FontWeight::NORMAL)
             .rounded(self.shape.radius())
             .border_1()
-            .cursor_pointer()
+            .when_some(
+                self.on_click.filter(|_| !self.disabled),
+                |this, on_click| {
+                    this.on_mouse_down(MouseButton::Left, |_, cx| cx.prevent_default())
+                        .on_click(move |event, cx| {
+                            cx.stop_propagation();
+                            (on_click)(event, cx)
+                        })
+                },
+            )
             .map(|this| {
                 if self.disabled {
                     let colors = self.appearance.disabled(cx);
@@ -154,11 +175,16 @@ impl RenderOnce for ButtonBase {
                     this.text_color(colors.text)
                         .bg(colors.bg)
                         .border_color(colors.outline)
+                        .cursor_pointer()
                         .hover(|this| {
-                            let colors = self.appearance.hover(cx);
-                            this.text_color(colors.text)
-                                .bg(colors.bg)
-                                .border_color(colors.outline)
+                            if !self.selected {
+                                let colors = self.appearance.hover(cx);
+                                this.text_color(colors.text)
+                                    .bg(colors.bg)
+                                    .border_color(colors.outline)
+                            } else {
+                                this
+                            }
                         })
                         .active(|style| style.opacity(0.8))
                         .when_some(self.leading, |this, leading| {
@@ -259,18 +285,18 @@ impl ButtonAppearance {
 
         match self {
             ButtonAppearance::Accent => ButtonStyle {
-                bg: colors.neutral_disabled(),
-                text: colors.on_neutral_disabled(),
+                bg: colors.accent_selected(),
+                text: colors.on_accent_selected(),
                 outline: rgba(0xffffff00),
             },
             ButtonAppearance::Neutral => ButtonStyle {
-                bg: colors.neutral_disabled(),
-                text: colors.on_neutral_disabled(),
-                outline: colors.stroke_neutral_disabled(),
+                bg: colors.neutral_selected(),
+                text: colors.on_neutral_selected(),
+                outline: rgba(0xffffff00),
             },
             ButtonAppearance::Subtle => ButtonStyle {
-                bg: rgba(0xffffff00),
-                text: colors.on_neutral_disabled(),
+                bg: colors.subtle_selected(),
+                text: colors.on_subtle_selected(),
                 outline: rgba(0xffffff00),
             },
         }
@@ -293,4 +319,11 @@ impl ButtonShape {
             ButtonShape::Square => BorderRadius::None,
         }
     }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, Default)]
+pub enum ButtonSize {
+    #[default]
+    Normal,
+    Compact,
 }

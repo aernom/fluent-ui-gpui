@@ -10,14 +10,12 @@ use super::button_base::{ButtonAppearance, ButtonBase, ButtonShape};
 #[derive(IntoElement)]
 pub struct ToggleButton {
     base: ButtonBase,
-    selected: bool,
 }
 
 impl ToggleButton {
     pub fn new(id: impl Into<ElementId>) -> Self {
         Self {
             base: ButtonBase::new(id),
-            selected: false,
         }
     }
 
@@ -61,7 +59,7 @@ impl Clickable for ToggleButton {
 
 impl Toggleable for ToggleButton {
     fn toggle_state(mut self, selected: bool) -> Self {
-        self.selected = selected;
+        self.base = self.base.toggle_state(selected);
         self
     }
 }

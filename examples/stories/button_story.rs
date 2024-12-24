@@ -1,5 +1,5 @@
 use fluent::{h_flex, v_flex, Button, ButtonAppearance, ButtonShape, Disableable};
-use gpui::{black, div, svg, Div, ParentElement, Styled};
+use gpui::{div, red, svg, Div, ParentElement, Styled};
 
 pub fn buttons_page() -> Div {
     v_flex()
@@ -9,25 +9,28 @@ pub fn buttons_page() -> Div {
                 Button::new(1)
                     .label("Primary")
                     .appearance(ButtonAppearance::Accent),
-                Button::new(2)
-                    .label("Outline")
-                    .appearance(ButtonAppearance::Neutral),
-                Button::new(3)
-                    .label("Subtle")
-                    .appearance(ButtonAppearance::Subtle),
+                Button::new(4)
+                    .label("Primary Disabled")
+                    .appearance(ButtonAppearance::Accent)
+                    .disabled(true),
             ]),
         )
         .child(
             h_flex().gap_2().children([
-                Button::new(4)
-                    .label("Primary Disabled")
-                    .leading(svg().path("send.svg"))
-                    .appearance(ButtonAppearance::Accent)
-                    .disabled(true),
+                Button::new(2)
+                    .label("Outline")
+                    .appearance(ButtonAppearance::Neutral),
                 Button::new(5)
                     .label("Outline Disabled")
                     .appearance(ButtonAppearance::Neutral)
                     .disabled(true),
+            ]),
+        )
+        .child(
+            h_flex().gap_2().children([
+                Button::new(3)
+                    .label("Subtle")
+                    .appearance(ButtonAppearance::Subtle),
                 Button::new(6)
                     .label("Subtle Disabled")
                     .appearance(ButtonAppearance::Subtle)
@@ -60,12 +63,10 @@ pub fn buttons_page() -> Div {
                     .trailing(svg().path("send.svg"))
                     .label("Cookie"),
                 Button::new(13).leading(svg().path("send.svg")).label(
-                    v_flex().items_start().child("Buttons can have").child(
-                        div()
-                            .text_xs()
-                            .text_color(black())
-                            .child("SECONDARY CONTENT"),
-                    ),
+                    v_flex()
+                        .items_start()
+                        .child("Buttons can have")
+                        .child(div().text_xs().text_color(red()).child("SECONDARY CONTENT")),
                 ),
             ]),
         )

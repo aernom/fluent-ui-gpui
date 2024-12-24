@@ -84,7 +84,7 @@ fn main() {
     App::new()
         .with_assets(Assets::from(PathBuf::from("examples/assets")))
         .run(|cx: &mut AppContext| {
-            cx.set_global(Theme::light());
+            cx.set_global(Theme::system(cx));
             cx.activate(true);
 
             cx.open_window(
