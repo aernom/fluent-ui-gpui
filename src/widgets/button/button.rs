@@ -1,9 +1,9 @@
 use gpui::{
-    px, relative, AnyElement, ClickEvent, ElementId, InteractiveElement, IntoElement, RenderOnce,
-    Styled, Svg, WindowContext,
+    prelude::FluentBuilder, relative, AnyElement, ClickEvent, ElementId, InteractiveElement,
+    IntoElement, RenderOnce, Styled, Svg, WindowContext,
 };
 
-use crate::{Clickable, Disableable, FixedWidth};
+use crate::{Clickable, Disableable, FixedWidth, Toggleable};
 
 use super::button_base::{ButtonAppearance, ButtonBase, ButtonShape, ButtonSize};
 
@@ -15,7 +15,7 @@ pub struct Button {
 impl Button {
     pub fn new(id: impl Into<ElementId>) -> Self {
         Self {
-            base: ButtonBase::new(id).min_w(px(96.)),
+            base: ButtonBase::new(id),
         }
     }
 
@@ -44,8 +44,8 @@ impl Button {
         self
     }
 
-    pub fn size(mut self, size: ButtonSize) -> Self {
-        self.base = self.base.size(size);
+    pub fn compact(mut self) -> Self {
+        self.base = self.base.compact();
         self
     }
 }
@@ -58,6 +58,13 @@ impl Clickable for Button {
 
     fn cursor_style(mut self, cursor_style: gpui::CursorStyle) -> Self {
         self.base = self.base.cursor_style(cursor_style);
+        self
+    }
+}
+
+impl Toggleable for Button {
+    fn toggle_state(mut self, selected: bool) -> Self {
+        self.base = self.base.toggle_state(selected);
         self
     }
 }
@@ -101,6 +108,14 @@ impl From<Button> for AnyElement {
 
 impl RenderOnce for Button {
     fn render(self, _: &mut WindowContext) -> impl IntoElement {
+        let (px, py, min_w) = match self.base.size {
+            ButtonSize::Normal => (gpui::px(12.), gpui::px(5.), Some(gpui::px(96.))),
+            ButtonSize::Compact => (gpui::px(12.), gpui::px(2.), None),
+        };
+
         self.base
+            .px(px)
+            .py(py)
+            .when_some(min_w, |this, min_w| this.min_w(min_w))
     }
 }

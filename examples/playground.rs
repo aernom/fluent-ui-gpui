@@ -72,7 +72,7 @@ impl Render for Playground {
                 "NOT SELECTED!"
             }))
             .child(
-                ToggleButton::new("toggle button")
+                Button::new("toggle button")
                     .mt_4()
                     .label("Togglami tutto")
                     .toggle_state(self.selected)

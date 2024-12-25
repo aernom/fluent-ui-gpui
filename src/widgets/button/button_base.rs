@@ -17,7 +17,7 @@ pub(super) struct ButtonBase {
     appearance: ButtonAppearance,
     selected: bool,
     shape: ButtonShape,
-    size: ButtonSize,
+    pub(super) size: ButtonSize,
     on_click: Option<Box<dyn Fn(&ClickEvent, &mut WindowContext) + 'static>>,
     cursor_style: CursorStyle,
 }
@@ -25,7 +25,7 @@ pub(super) struct ButtonBase {
 impl ButtonBase {
     pub(super) fn new(id: impl Into<ElementId>) -> Self {
         Self {
-            base: div().flex_shrink_0().px(px(12.)).py(px(5.)),
+            base: div().flex_shrink_0(),
             id: id.into(),
             leading: None,
             trailing: None,
@@ -65,8 +65,8 @@ impl ButtonBase {
         self
     }
 
-    pub(super) fn size(mut self, size: ButtonSize) -> Self {
-        self.size = size;
+    pub(super) fn compact(mut self) -> Self {
+        self.size = ButtonSize::Compact;
         self
     }
 }

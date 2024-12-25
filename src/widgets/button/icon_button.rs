@@ -5,32 +5,22 @@ use gpui::{
 
 use crate::{Clickable, Disableable, FixedWidth, Toggleable};
 
-use super::button_base::{ButtonAppearance, ButtonBase, ButtonShape};
+use super::button_base::{ButtonAppearance, ButtonBase, ButtonShape, ButtonSize};
 
 #[derive(IntoElement)]
-pub struct ToggleButton {
+pub struct IconButton {
     base: ButtonBase,
 }
 
-impl ToggleButton {
+impl IconButton {
     pub fn new(id: impl Into<ElementId>) -> Self {
         Self {
             base: ButtonBase::new(id),
         }
     }
 
-    pub fn label(mut self, label: impl IntoElement) -> Self {
-        self.base = self.base.label(label.into_any_element());
-        self
-    }
-
-    pub fn leading(mut self, leading: Svg) -> Self {
-        self.base = self.base.leading(leading);
-        self
-    }
-
-    pub fn trailing(mut self, trailing: Svg) -> Self {
-        self.base = self.base.trailing(trailing);
+    pub fn icon(mut self, icon: Svg) -> Self {
+        self.base = self.base.leading(icon);
         self
     }
 
@@ -43,9 +33,14 @@ impl ToggleButton {
         self.base = self.base.shape(shape);
         self
     }
+
+    pub fn compact(mut self) -> Self {
+        self.base = self.base.compact();
+        self
+    }
 }
 
-impl Clickable for ToggleButton {
+impl Clickable for IconButton {
     fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
         self.base = self.base.on_click(handler);
         self
@@ -57,21 +52,21 @@ impl Clickable for ToggleButton {
     }
 }
 
-impl Toggleable for ToggleButton {
+impl Toggleable for IconButton {
     fn toggle_state(mut self, selected: bool) -> Self {
         self.base = self.base.toggle_state(selected);
         self
     }
 }
 
-impl Disableable for ToggleButton {
+impl Disableable for IconButton {
     fn disabled(mut self, disabled: bool) -> Self {
         self.base = self.base.disabled(disabled);
         self
     }
 }
 
-impl FixedWidth for ToggleButton {
+impl FixedWidth for IconButton {
     fn width(mut self, width: gpui::DefiniteLength) -> Self {
         self.base = self.base.w(width);
         self
@@ -83,26 +78,31 @@ impl FixedWidth for ToggleButton {
     }
 }
 
-impl Styled for ToggleButton {
+impl Styled for IconButton {
     fn style(&mut self) -> &mut gpui::StyleRefinement {
         self.base.style()
     }
 }
 
-impl InteractiveElement for ToggleButton {
+impl InteractiveElement for IconButton {
     fn interactivity(&mut self) -> &mut gpui::Interactivity {
         self.base.interactivity()
     }
 }
 
-impl From<ToggleButton> for AnyElement {
-    fn from(button: ToggleButton) -> Self {
+impl From<IconButton> for AnyElement {
+    fn from(button: IconButton) -> Self {
         button.into_any_element()
     }
 }
 
-impl RenderOnce for ToggleButton {
+impl RenderOnce for IconButton {
     fn render(self, _: &mut WindowContext) -> impl IntoElement {
-        self.base
+        let padding = match self.base.size {
+            ButtonSize::Normal => gpui::px(8.),
+            ButtonSize::Compact => gpui::px(4.),
+        };
+
+        self.base.p(padding)
     }
 }

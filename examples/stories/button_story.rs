@@ -1,4 +1,4 @@
-use fluent::{h_flex, v_flex, Button, ButtonAppearance, ButtonShape, Disableable};
+use fluent::{h_flex, v_flex, Button, ButtonAppearance, ButtonShape, Disableable, IconButton};
 use gpui::{div, red, svg, Div, ParentElement, Styled};
 
 pub fn buttons_page() -> Div {
@@ -51,6 +51,19 @@ pub fn buttons_page() -> Div {
             ]),
         )
         .child(
+            h_flex().gap_2().children([
+                Button::new(46)
+                    .label("Accent Compact")
+                    .appearance(ButtonAppearance::Accent)
+                    .compact(),
+                Button::new(45).label("Default Compact").compact(),
+                Button::new(47)
+                    .label("Subtle Compact")
+                    .appearance(ButtonAppearance::Subtle)
+                    .compact(),
+            ]),
+        )
+        .child(
             h_flex().flex_wrap().gap_2().children([
                 Button::new(10)
                     .leading(svg().path("send.svg"))
@@ -68,6 +81,38 @@ pub fn buttons_page() -> Div {
                         .child("Buttons can have")
                         .child(div().text_xs().text_color(red()).child("SECONDARY CONTENT")),
                 ),
+            ]),
+        )
+        .child(
+            h_flex().flex_wrap().gap_2().children([
+                IconButton::new(14).icon(svg().path("send.svg")),
+                IconButton::new(15)
+                    .icon(svg().path("send.svg"))
+                    .appearance(ButtonAppearance::Subtle),
+                IconButton::new(16)
+                    .icon(svg().path("send.svg"))
+                    .appearance(ButtonAppearance::Accent),
+                IconButton::new(17)
+                    .icon(svg().path("send.svg"))
+                    .appearance(ButtonAppearance::Accent)
+                    .shape(ButtonShape::Square),
+                IconButton::new(18)
+                    .icon(svg().path("send.svg"))
+                    .appearance(ButtonAppearance::Accent)
+                    .shape(ButtonShape::Circular),
+            ]),
+        )
+        .child(
+            h_flex().flex_wrap().gap_2().children([
+                IconButton::new(19).icon(svg().path("send.svg")).compact(),
+                IconButton::new(20)
+                    .icon(svg().path("send.svg"))
+                    .appearance(ButtonAppearance::Subtle)
+                    .compact(),
+                IconButton::new(21)
+                    .icon(svg().path("send.svg"))
+                    .appearance(ButtonAppearance::Accent)
+                    .compact(),
             ]),
         )
 }

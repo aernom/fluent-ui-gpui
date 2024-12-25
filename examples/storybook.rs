@@ -69,14 +69,6 @@ impl Render for Storybook {
                 Story::Divider => dividers_page(),
                 Story::Input => div().p_12(), /*.child(InputStory::view(cx))*/
             })
-            .child(
-                svg()
-                    .path("rocket.svg")
-                    .w_24()
-                    .h_24()
-                    .mt_4()
-                    .text_color(cx.theme().colors().accent()),
-            )
     }
 }
 
