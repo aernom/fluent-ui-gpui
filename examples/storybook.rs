@@ -32,10 +32,12 @@ struct Storybook {
 
 impl Render for Storybook {
     fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
+        let colors = cx.theme().colors();
+
         h_flex()
             .size_full()
-            .text_color(cx.theme().colors().on_neutral())
-            .bg(cx.theme().colors().surface_dim())
+            .text_color(colors.on_neutral())
+            .bg(colors.surface_blur_layer())
             .items_start()
             .children([
                 v_flex().pt_10().px_2().w(px(200.)).children([
@@ -74,7 +76,7 @@ impl Render for Storybook {
                     .flex_wrap()
                     .flex_1()
                     .h_full()
-                    .bg(cx.theme().colors().surface())
+                    .bg(colors.surface())
                     .child(
                         h_flex().mb_6().children([
                             NavItem::new(Story::Button)
@@ -126,7 +128,7 @@ fn main() {
     App::new()
         .with_assets(Assets::from(PathBuf::from("examples/assets")))
         .run(|cx: &mut AppContext| {
-            cx.set_global(Theme::system(cx));
+            cx.set_global(Theme::light());
             cx.activate(true);
 
             cx.open_window(
@@ -141,6 +143,7 @@ fn main() {
                         appears_transparent: true,
                         ..TitlebarOptions::default()
                     }),
+                    window_background: WindowBackgroundAppearance::Blurred,
                     ..Default::default()
                 },
                 |cx| {

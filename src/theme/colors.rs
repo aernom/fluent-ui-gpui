@@ -16,6 +16,7 @@ pub struct ColorScheme {
     subtle_selected: Rgba,
     surface: Rgba,
     surface_dim: Rgba,
+    surface_blur_layer: Rgba,
     // foregrounds
     on_neutral: Rgba,
     on_neutral_disabled: Rgba,
@@ -48,11 +49,12 @@ impl ColorScheme {
             accent_disabled: rgba(0x00000038),
             accent_selected: rgb(0x000000),
             subtle: rgba(0x00000000),
-            subtle_hover: rgba(0x0000000a),
+            subtle_hover: rgba(0x0000000f),
             subtle_disabled: rgba(0x00000000),
             subtle_selected: rgb(0x0060b8),
             surface: rgb(0xffffff), // alt 0xfafafa
             surface_dim: rgb(0xf3f3f3),
+            surface_blur_layer: rgba(0xffffffbf),
             // foregrounds
             on_neutral: rgba(0x000000e3),
             on_neutral_disabled: rgba(0x0000005c),
@@ -90,6 +92,7 @@ impl ColorScheme {
             subtle_selected: rgb(0x61ccff),
             surface: rgb(0x272727),
             surface_dim: rgb(0x202020),
+            surface_blur_layer: rgba(0x202020bf),
             // foregrounds
             on_neutral: rgb(0xffffff),
             on_neutral_disabled: rgba(0xffffff5c),
@@ -164,6 +167,10 @@ impl ColorScheme {
 
     pub fn surface_dim(&self) -> Rgba {
         self.surface_dim
+    }
+
+    pub fn surface_blur_layer(&self) -> Rgba {
+        self.surface_blur_layer
     }
 
     pub fn on_neutral(&self) -> Rgba {

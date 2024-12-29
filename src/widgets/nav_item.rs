@@ -120,7 +120,7 @@ impl RenderOnce for NavItem {
             .rounded_md()
             .text_size(px(14.))
             .line_height(px(20.))
-            .font_weight(FontWeight::MEDIUM)
+            .font_weight(FontWeight::NORMAL)
             .child(self.label)
             .when(self.disabled, |this| {
                 this.text_color(colors.on_neutral_disabled())
@@ -135,7 +135,7 @@ impl RenderOnce for NavItem {
                         div()
                             .absolute()
                             .invisible()
-                            .rounded(px(1.))
+                            .rounded(px(1.5))
                             .map(|this| match self.orientation {
                                 Orientation::Horizontal => {
                                     this.w(px(3.)).left_0().top(px(10.)).bottom(px(10.))
