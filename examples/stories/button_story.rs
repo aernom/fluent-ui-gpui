@@ -39,6 +39,17 @@ pub fn buttons_page() -> Div {
         )
         .child(
             h_flex().gap_2().children([
+                Button::new(66)
+                    .label("Hyperlink")
+                    .appearance(ButtonAppearance::Hyperlink),
+                Button::new(67)
+                    .label("Hyperlink Disabled")
+                    .appearance(ButtonAppearance::Hyperlink)
+                    .disabled(true),
+            ]),
+        )
+        .child(
+            h_flex().gap_2().children([
                 Button::new(7).label("Rounded (Default)"),
                 Button::new(8)
                     .label("Circular")

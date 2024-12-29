@@ -20,6 +20,10 @@ impl Playground {
 impl Render for Playground {
     fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
         let colors = cx.theme().colors();
+        let label = match self.selected {
+            true => "On",
+            false => "Off",
+        };
 
         v_flex()
             .w_full()
@@ -72,21 +76,41 @@ impl Render for Playground {
                 "NOT SELECTED!"
             }))
             .child(
-                Button::new("toggle button")
-                    .mt_4()
-                    .label("Togglami tutto")
-                    .toggle_state(self.selected)
-                    .on_click(cx.listener(|view, _, cx| {
-                        view.selected = !view.selected;
-                        cx.notify();
-                    })),
+                h_flex().gap_4().children([
+                    Button::new("toggle button")
+                        .mt_4()
+                        .label(label)
+                        .toggle_state(self.selected)
+                        .on_click(cx.listener(|view, _, cx| {
+                            view.selected = !view.selected;
+                            cx.notify();
+                        })),
+                    Button::new("toggle button 2")
+                        .mt_4()
+                        .label(label)
+                        .appearance(ButtonAppearance::Accent)
+                        .toggle_state(self.selected)
+                        .on_click(cx.listener(|view, _, cx| {
+                            view.selected = !view.selected;
+                            cx.notify();
+                        })),
+                    Button::new("toggle button 3")
+                        .mt_4()
+                        .label(label)
+                        .appearance(ButtonAppearance::Subtle)
+                        .toggle_state(self.selected)
+                        .on_click(cx.listener(|view, _, cx| {
+                            view.selected = !view.selected;
+                            cx.notify();
+                        })),
+                ]),
             )
     }
 }
 
 fn main() {
     App::new().run(|cx: &mut AppContext| {
-        cx.set_global(Theme::system(cx));
+        cx.set_global(Theme::light());
         cx.activate(true);
 
         cx.open_window(

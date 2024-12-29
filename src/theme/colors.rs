@@ -15,11 +15,12 @@ pub struct ColorScheme {
     subtle_disabled: Rgba,
     subtle_selected: Rgba,
     surface: Rgba,
+    surface_dim: Rgba,
     // foregrounds
     on_neutral: Rgba,
-    on_neutral_variant: Rgba,
     on_neutral_disabled: Rgba,
     on_neutral_selected: Rgba,
+    on_neutral_accent: Rgba,
     on_accent: Rgba,
     on_accent_disabled: Rgba,
     on_accent_selected: Rgba,
@@ -45,17 +46,18 @@ impl ColorScheme {
             accent: rgb(0x0060b8),
             accent_hover: rgb(0x186fbf),
             accent_disabled: rgba(0x00000038),
-            accent_selected: rgb(0x00), // TODO
+            accent_selected: rgb(0x000000),
             subtle: rgba(0x00000000),
             subtle_hover: rgba(0x0000000a),
             subtle_disabled: rgba(0x00000000),
-            subtle_selected: rgb(0x00), // TODO
-            surface: rgb(0xfafafa),
+            subtle_selected: rgb(0x0060b8),
+            surface: rgb(0xffffff), // alt 0xfafafa
+            surface_dim: rgb(0xf3f3f3),
             // foregrounds
             on_neutral: rgba(0x000000e3),
-            on_neutral_variant: rgb(0x424242),
             on_neutral_disabled: rgba(0x0000005c),
             on_neutral_selected: rgb(0xffffff),
+            on_neutral_accent: rgb(0x003e92),
             on_accent: rgb(0xffffff),
             on_accent_disabled: rgb(0xffffff),
             on_accent_selected: rgb(0xffffff),
@@ -85,13 +87,14 @@ impl ColorScheme {
             subtle: rgba(0x00000000),
             subtle_hover: rgba(0xffffff0f),
             subtle_disabled: rgba(0x00000000),
-            subtle_selected: rgb(0x00), // TODO
-            surface: rgb(0x1c1c1c),
+            subtle_selected: rgb(0x61ccff),
+            surface: rgb(0x272727),
+            surface_dim: rgb(0x202020),
             // foregrounds
             on_neutral: rgb(0xffffff),
-            on_neutral_variant: rgb(0xd6d6d6),
             on_neutral_disabled: rgba(0xffffff5c),
             on_neutral_selected: rgb(0x000000),
+            on_neutral_accent: rgb(0x99ebff),
             on_accent: rgb(0x000000),
             on_accent_disabled: rgba(0xffffff87),
             on_accent_selected: rgb(0x000000),
@@ -159,12 +162,12 @@ impl ColorScheme {
         self.surface
     }
 
-    pub fn on_neutral(&self) -> Rgba {
-        self.on_neutral
+    pub fn surface_dim(&self) -> Rgba {
+        self.surface_dim
     }
 
-    pub fn on_neutral_variant(&self) -> Rgba {
-        self.on_neutral_variant
+    pub fn on_neutral(&self) -> Rgba {
+        self.on_neutral
     }
 
     pub fn on_neutral_disabled(&self) -> Rgba {
@@ -173,6 +176,10 @@ impl ColorScheme {
 
     pub fn on_neutral_selected(&self) -> Rgba {
         self.on_neutral_selected
+    }
+
+    pub fn on_neutral_accent(&self) -> Rgba {
+        self.on_neutral_accent
     }
 
     pub fn on_accent(&self) -> Rgba {

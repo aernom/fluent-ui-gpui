@@ -32,43 +32,93 @@ struct Storybook {
 
 impl Render for Storybook {
     fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
-        v_flex()
-            .w_full()
-            .h_full()
-            .flex_wrap()
+        h_flex()
+            .size_full()
             .text_color(cx.theme().colors().on_neutral())
-            .bg(cx.theme().colors().surface())
-            .child(TitleBar::new().child(div().text_sm().child("This is a custom TitleBar")))
-            .child(
-                h_flex().mb_6().children([
-                    Tab::new(Story::Button, "Buttons", self.selected_tab == Story::Button)
+            .bg(cx.theme().colors().surface_dim())
+            .items_start()
+            .children([
+                v_flex().pt_10().px_2().w(px(200.)).children([
+                    NavItem::new(Story::Button)
+                        .label("Buttons")
+                        .orientation(Orientation::Horizontal)
+                        .toggle_state(self.selected_tab == Story::Button)
                         .on_click(cx.listener(|view, _, cx| {
                             view.selected_tab = Story::Button;
                             cx.notify();
                         })),
-                    Tab::new(
-                        Story::Divider,
-                        "Dividers",
-                        self.selected_tab == Story::Divider,
-                    )
-                    .on_click(cx.listener(|view, _, cx| {
-                        view.selected_tab = Story::Divider;
-                        cx.notify();
-                    })),
-                    Tab::new(Story::Input, "Inputs", self.selected_tab == Story::Input).on_click(
-                        cx.listener(|view, _, cx| {
+                    NavItem::new(Story::Divider)
+                        .label("Dividers")
+                        .orientation(Orientation::Horizontal)
+                        .toggle_state(self.selected_tab == Story::Divider)
+                        .on_click(cx.listener(|view, _, cx| {
+                            view.selected_tab = Story::Divider;
+                            cx.notify();
+                        })),
+                    NavItem::new(Story::Input)
+                        .label("Inputs")
+                        .orientation(Orientation::Horizontal)
+                        .toggle_state(self.selected_tab == Story::Input)
+                        .on_click(cx.listener(|view, _, cx| {
                             view.selected_tab = Story::Input;
                             cx.notify();
-                        }),
-                    ),
-                    Tab::new("disabled", "Disabled", false).disabled(true),
+                        })),
+                    NavItem::new("disabled")
+                        .label("Disabled")
+                        .orientation(Orientation::Horizontal)
+                        .toggle_state(false)
+                        .disabled(true),
                 ]),
+                v_flex()
+                    .pt_5()
+                    .flex_wrap()
+                    .flex_1()
+                    .h_full()
+                    .bg(cx.theme().colors().surface())
+                    .child(
+                        h_flex().mb_6().children([
+                            NavItem::new(Story::Button)
+                                .label("Buttons")
+                                .toggle_state(self.selected_tab == Story::Button)
+                                .on_click(cx.listener(|view, _, cx| {
+                                    view.selected_tab = Story::Button;
+                                    cx.notify();
+                                })),
+                            NavItem::new(Story::Divider)
+                                .label("Dividers")
+                                .toggle_state(self.selected_tab == Story::Divider)
+                                .on_click(cx.listener(|view, _, cx| {
+                                    view.selected_tab = Story::Divider;
+                                    cx.notify();
+                                })),
+                            NavItem::new(Story::Input)
+                                .label("Inputs")
+                                .toggle_state(self.selected_tab == Story::Input)
+                                .on_click(cx.listener(|view, _, cx| {
+                                    view.selected_tab = Story::Input;
+                                    cx.notify();
+                                })),
+                            NavItem::new("disabled")
+                                .label("Disabled")
+                                .toggle_state(false)
+                                .disabled(true),
+                        ]),
+                    )
+                    .child(match self.selected_tab {
+                        Story::Button => buttons_page(),
+                        Story::Divider => dividers_page(),
+                        Story::Input => div().p_12(), /*.child(InputStory::view(cx))*/
+                    }),
+            ])
+            .child(
+                div().absolute().left_0().top_0().right_0().child(
+                    TitleBar::new().child(
+                        div()
+                            .text_sm()
+                            .child("This is a custom TitleBar, your content goes here"),
+                    ),
+                ),
             )
-            .child(match self.selected_tab {
-                Story::Button => buttons_page(),
-                Story::Divider => dividers_page(),
-                Story::Input => div().p_12(), /*.child(InputStory::view(cx))*/
-            })
     }
 }
 
@@ -83,7 +133,7 @@ fn main() {
                 WindowOptions {
                     window_bounds: Some(WindowBounds::Windowed(Bounds::centered(
                         None,
-                        size(px(800.0), px(600.0)),
+                        size(px(1000.0), px(700.0)),
                         cx,
                     ))),
                     titlebar: Some(TitlebarOptions {

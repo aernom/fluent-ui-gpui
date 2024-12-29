@@ -199,10 +199,11 @@ impl RenderOnce for ButtonBase {
     }
 }
 
-pub(super) struct ButtonStyle {
-    bg: Rgba,
-    text: Rgba,
-    outline: Rgba,
+#[derive(Clone, Copy, PartialEq, Eq, Default)]
+pub enum ButtonSize {
+    #[default]
+    Normal,
+    Compact,
 }
 
 #[derive(Clone, Copy, PartialEq, Eq, Default)]
@@ -211,6 +212,31 @@ pub enum ButtonAppearance {
     #[default]
     Neutral,
     Subtle,
+    Hyperlink,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, Default)]
+pub enum ButtonShape {
+    #[default]
+    Rounded,
+    Circular,
+    Square,
+}
+
+impl ButtonShape {
+    fn radius(&self) -> impl Clone + Into<AbsoluteLength> {
+        match self {
+            ButtonShape::Rounded => BorderRadius::Medium,
+            ButtonShape::Circular => BorderRadius::Circular,
+            ButtonShape::Square => BorderRadius::None,
+        }
+    }
+}
+
+pub(super) struct ButtonStyle {
+    bg: Rgba,
+    text: Rgba,
+    outline: Rgba,
 }
 
 impl ButtonAppearance {
@@ -230,7 +256,12 @@ impl ButtonAppearance {
             },
             ButtonAppearance::Subtle => ButtonStyle {
                 bg: colors.subtle(),
-                text: colors.on_neutral_variant(),
+                text: colors.on_subtle(),
+                outline: rgba(0xffffff00),
+            },
+            ButtonAppearance::Hyperlink => ButtonStyle {
+                bg: colors.subtle(),
+                text: colors.on_neutral_accent(),
                 outline: rgba(0xffffff00),
             },
         }
@@ -255,6 +286,11 @@ impl ButtonAppearance {
                 text: colors.on_subtle(),
                 outline: rgba(0xffffff00),
             },
+            ButtonAppearance::Hyperlink => ButtonStyle {
+                bg: colors.subtle_hover(),
+                text: colors.on_neutral_accent(),
+                outline: rgba(0xffffff00),
+            },
         }
     }
 
@@ -272,7 +308,7 @@ impl ButtonAppearance {
                 text: colors.on_neutral_disabled(),
                 outline: colors.stroke_neutral_disabled(),
             },
-            ButtonAppearance::Subtle => ButtonStyle {
+            ButtonAppearance::Subtle | ButtonAppearance::Hyperlink => ButtonStyle {
                 bg: colors.subtle(),
                 text: colors.on_subtle_disabled(),
                 outline: rgba(0xffffff00),
@@ -294,36 +330,11 @@ impl ButtonAppearance {
                 text: colors.on_neutral_selected(),
                 outline: rgba(0xffffff00),
             },
-            ButtonAppearance::Subtle => ButtonStyle {
+            ButtonAppearance::Subtle | ButtonAppearance::Hyperlink => ButtonStyle {
                 bg: colors.subtle_selected(),
                 text: colors.on_subtle_selected(),
                 outline: rgba(0xffffff00),
             },
         }
     }
-}
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum ButtonShape {
-    #[default]
-    Rounded,
-    Circular,
-    Square,
-}
-
-impl ButtonShape {
-    fn radius(&self) -> impl Clone + Into<AbsoluteLength> {
-        match self {
-            ButtonShape::Rounded => BorderRadius::Medium,
-            ButtonShape::Circular => BorderRadius::Circular,
-            ButtonShape::Square => BorderRadius::None,
-        }
-    }
-}
-
-#[derive(Clone, Copy, PartialEq, Eq, Default)]
-pub enum ButtonSize {
-    #[default]
-    Normal,
-    Compact,
 }

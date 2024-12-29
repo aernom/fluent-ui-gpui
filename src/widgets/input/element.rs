@@ -362,7 +362,7 @@ impl Element for TextElement {
         let mut bounds = bounds;
 
         let (display_text, text_color) = if text.is_empty() {
-            (placeholder, cx.theme().colors().on_neutral_variant())
+            (placeholder, cx.theme().colors().on_neutral_accent())
         } else {
             (text, cx.theme().colors().on_neutral())
         };
