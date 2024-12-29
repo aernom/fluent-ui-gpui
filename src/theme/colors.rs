@@ -54,7 +54,7 @@ impl ColorScheme {
             subtle_selected: rgb(0x0060b8),
             surface: rgb(0xffffff), // alt 0xfafafa
             surface_dim: rgb(0xf3f3f3),
-            surface_blur_layer: rgba(0xffffffbf),
+            surface_blur_layer: rgba(0xffffffdf),
             // foregrounds
             on_neutral: rgba(0x000000e3),
             on_neutral_disabled: rgba(0x0000005c),
@@ -92,7 +92,7 @@ impl ColorScheme {
             subtle_selected: rgb(0x61ccff),
             surface: rgb(0x272727),
             surface_dim: rgb(0x202020),
-            surface_blur_layer: rgba(0x202020bf),
+            surface_blur_layer: rgba(0x202020df),
             // foregrounds
             on_neutral: rgb(0xffffff),
             on_neutral_disabled: rgba(0xffffff5c),

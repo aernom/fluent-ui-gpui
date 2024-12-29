@@ -40,7 +40,7 @@ impl Render for Storybook {
             .bg(colors.surface_blur_layer())
             .items_start()
             .children([
-                v_flex().pt_10().px_2().w(px(200.)).children([
+                v_flex().pt_10().px_2().w(px(250.)).children([
                     NavItem::new(Story::Button)
                         .label("Buttons")
                         .orientation(Orientation::Horizontal)
@@ -128,7 +128,9 @@ fn main() {
     App::new()
         .with_assets(Assets::from(PathBuf::from("examples/assets")))
         .run(|cx: &mut AppContext| {
-            cx.set_global(Theme::light());
+            // cx.set_global(Theme::light());
+            // cx.set_global(Theme::dark());
+            cx.set_global(Theme::system(cx));
             cx.activate(true);
 
             cx.open_window(
