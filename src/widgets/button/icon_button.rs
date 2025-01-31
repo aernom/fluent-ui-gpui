@@ -1,6 +1,6 @@
 use gpui::{
-    relative, AnyElement, ClickEvent, ElementId, InteractiveElement, IntoElement, RenderOnce,
-    Styled, Svg, WindowContext,
+    relative, AnyElement, App, ClickEvent, ElementId, InteractiveElement, IntoElement, RenderOnce,
+    Styled, Svg, Window,
 };
 
 use crate::{Clickable, Disableable, FixedWidth, Toggleable};
@@ -41,7 +41,7 @@ impl IconButton {
 }
 
 impl Clickable for IconButton {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
         self.base = self.base.on_click(handler);
         self
     }
@@ -97,7 +97,7 @@ impl From<IconButton> for AnyElement {
 }
 
 impl RenderOnce for IconButton {
-    fn render(self, _: &mut WindowContext) -> impl IntoElement {
+    fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
         let padding = match self.base.size {
             ButtonSize::Normal => gpui::px(8.),
             ButtonSize::Compact => gpui::px(4.),

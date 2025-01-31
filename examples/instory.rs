@@ -481,26 +481,27 @@ impl Element for TextElement {
         bounds: Bounds<Pixels>,
         _request_layout: &mut Self::RequestLayoutState,
         prepaint: &mut Self::PrepaintState,
-        cx: &mut WindowContext,
+        window: &mut Window,
     ) {
-        let focus_handle = self.input.read(cx).focus_handle.clone();
-        cx.handle_input(
+        let focus_handle = self.input.read(window).focus_handle.clone();
+        window.handle_input(
             &focus_handle,
             ElementInputHandler::new(bounds, self.input.clone()),
         );
         if let Some(selection) = prepaint.selection.take() {
-            cx.paint_quad(selection)
+            window.paint_quad(selection)
         }
         let line = prepaint.line.take().unwrap();
-        line.paint(bounds.origin, cx.line_height(), cx).unwrap();
+        line.paint(bounds.origin, window.line_height(), window)
+            .unwrap();
 
-        if focus_handle.is_focused(cx) {
+        if focus_handle.is_focused(window) {
             if let Some(cursor) = prepaint.cursor.take() {
-                cx.paint_quad(cursor);
+                window.paint_quad(cursor);
             }
         }
 
-        self.input.update(cx, |input, _cx| {
+        self.input.update(window, |input, _cx| {
             input.last_layout = Some(line);
             input.last_bounds = Some(bounds);
         });

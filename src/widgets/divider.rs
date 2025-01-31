@@ -1,6 +1,6 @@
 use gpui::{
-    div, prelude::FluentBuilder, px, Axis, Div, Hsla, IntoElement, RenderOnce, SharedString,
-    StyleRefinement, Styled, WindowContext,
+    div, prelude::FluentBuilder, px, App, Axis, Div, Hsla, IntoElement, RenderOnce, SharedString,
+    StyleRefinement, Styled, Window,
 };
 
 use crate::ThemeProvider;
@@ -50,7 +50,7 @@ impl Styled for Divider {
 }
 
 impl RenderOnce for Divider {
-    fn render(self, cx: &mut WindowContext) -> impl gpui::IntoElement {
+    fn render(self, cx: &mut Window, _: &mut App) -> impl gpui::IntoElement {
         self.base
             .map(|this| match self.axis {
                 Axis::Vertical => this.h_full().w(px(1.)),
@@ -71,7 +71,7 @@ pub enum DividerStyle {
 }
 
 impl DividerStyle {
-    fn fill(&self, cx: &WindowContext) -> Hsla {
+    fn fill(&self, cx: &Window) -> Hsla {
         let colors = cx.theme().colors();
 
         match self {

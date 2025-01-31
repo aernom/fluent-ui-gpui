@@ -9,11 +9,10 @@ use unicode_segmentation::*;
 
 use gpui::prelude::FluentBuilder as _;
 use gpui::{
-    actions, div, point, px, AnyElement, AppContext, Bounds, ClipboardItem, Context as _,
-    EventEmitter, FocusHandle, FocusableView, Half, InteractiveElement as _, IntoElement,
-    KeyBinding, KeyDownEvent, Model, MouseButton, MouseDownEvent, MouseMoveEvent, MouseUpEvent,
-    ParentElement as _, Pixels, Point, Rems, Render, ScrollHandle, ScrollWheelEvent, SharedString,
-    Styled as _, UTF16Selection, ViewContext, ViewInputHandler, WindowContext, WrappedLine,
+    actions, div, point, px, AnyElement, App, AppContext, Bounds, ClipboardItem, EventEmitter,
+    FocusHandle, Half, InteractiveElement as _, IntoElement, KeyBinding, KeyDownEvent, MouseButton,
+    MouseDownEvent, MouseMoveEvent, MouseUpEvent, ParentElement as _, Pixels, Point, Rems, Render,
+    ScrollHandle, ScrollWheelEvent, SharedString, Styled as _, UTF16Selection, Window, WrappedLine,
 };
 
 // TODO:
@@ -68,7 +67,7 @@ pub enum InputEvent {
 
 const CONTEXT: &str = "Input";
 
-pub fn init(cx: &mut AppContext) {
+pub fn init(cx: &mut App) {
     cx.bind_keys([
         KeyBinding::new("backspace", Backspace, Some(CONTEXT)),
         KeyBinding::new("delete", Delete, Some(CONTEXT)),
@@ -1038,7 +1037,7 @@ impl FocusableView for TextInput {
 }
 
 impl Render for TextInput {
-    fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
+    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         const LINE_HEIGHT: Rems = Rems(1.25);
         let focused = self.focus_handle.is_focused(cx);
 

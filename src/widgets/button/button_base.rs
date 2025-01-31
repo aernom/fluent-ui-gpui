@@ -1,7 +1,7 @@
 use gpui::{
-    div, prelude::FluentBuilder, px, relative, rgba, AbsoluteLength, AnyElement, ClickEvent,
+    div, prelude::FluentBuilder, px, relative, rgba, AbsoluteLength, AnyElement, App, ClickEvent,
     CursorStyle, Div, ElementId, FontWeight, InteractiveElement, IntoElement, MouseButton,
-    ParentElement, RenderOnce, Rgba, StatefulInteractiveElement, Styled, Svg, WindowContext,
+    ParentElement, RenderOnce, Rgba, StatefulInteractiveElement, Styled, Svg, Window,
 };
 
 use crate::{BorderRadius, Clickable, Disableable, FixedWidth, Theme, Toggleable};
@@ -18,7 +18,7 @@ pub(super) struct ButtonBase {
     selected: bool,
     shape: ButtonShape,
     pub(super) size: ButtonSize,
-    on_click: Option<Box<dyn Fn(&ClickEvent, &mut WindowContext) + 'static>>,
+    on_click: Option<Box<dyn Fn(&ClickEvent, &mut Window) + 'static>>,
     cursor_style: CursorStyle,
 }
 
@@ -72,7 +72,7 @@ impl ButtonBase {
 }
 
 impl Clickable for ButtonBase {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
         self.on_click = Some(Box::new(handler));
         self
     }
@@ -128,7 +128,7 @@ impl From<ButtonBase> for AnyElement {
 }
 
 impl RenderOnce for ButtonBase {
-    fn render(self, cx: &mut WindowContext) -> impl IntoElement {
+    fn render(self, cx: &mut Window, _: &mut App) -> impl IntoElement {
         self.base
             .id(self.id)
             .flex()
@@ -144,10 +144,10 @@ impl RenderOnce for ButtonBase {
             .when_some(
                 self.on_click.filter(|_| !self.disabled),
                 |this, on_click| {
-                    this.on_mouse_down(MouseButton::Left, |_, cx| cx.prevent_default())
-                        .on_click(move |event, cx| {
-                            cx.stop_propagation();
-                            (on_click)(event, cx)
+                    this.on_mouse_down(MouseButton::Left, |_, cx, _| cx.prevent_default())
+                        .on_click(move |event, window, app| {
+                            app.stop_propagation();
+                            (on_click)(event, window)
                         })
                 },
             )
@@ -240,7 +240,7 @@ pub(super) struct ButtonStyle {
 }
 
 impl ButtonAppearance {
-    fn base(&self, cx: &WindowContext) -> ButtonStyle {
+    fn base(&self, cx: &Window) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {
@@ -267,7 +267,7 @@ impl ButtonAppearance {
         }
     }
 
-    fn hover(&self, cx: &WindowContext) -> ButtonStyle {
+    fn hover(&self, cx: &Window) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {
@@ -294,7 +294,7 @@ impl ButtonAppearance {
         }
     }
 
-    fn disabled(&self, cx: &WindowContext) -> ButtonStyle {
+    fn disabled(&self, cx: &Window) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {
@@ -316,7 +316,7 @@ impl ButtonAppearance {
         }
     }
 
-    fn selected(&self, cx: &WindowContext) -> ButtonStyle {
+    fn selected(&self, cx: &Window) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {

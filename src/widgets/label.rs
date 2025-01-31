@@ -1,6 +1,6 @@
 use gpui::{
-    div, prelude::FluentBuilder, relative, AnyElement, Div, FontWeight, Hsla, IntoElement,
-    ParentElement, RenderOnce, StyleRefinement, Styled, UnderlineStyle, WindowContext,
+    div, prelude::FluentBuilder, relative, AnyElement, App, Div, FontWeight, Hsla, IntoElement,
+    ParentElement, RenderOnce, StyleRefinement, Styled, UnderlineStyle, Window,
 };
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy, Default)]
@@ -110,7 +110,7 @@ impl ParentElement for Label {
 }
 
 impl RenderOnce for Label {
-    fn render(self, _: &mut WindowContext) -> impl IntoElement {
+    fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
         self.base
             .map(|this| match self.size {
                 LabelSize::Large => this.text_lg(),

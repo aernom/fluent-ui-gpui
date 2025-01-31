@@ -1,7 +1,7 @@
 use gpui::{
-    div, prelude::FluentBuilder, px, AnyElement, Div, ElementId, InteractiveElement, Interactivity,
-    IntoElement, ParentElement, Pixels, RenderOnce, Rgba, StatefulInteractiveElement, Styled,
-    WindowContext,
+    div, prelude::FluentBuilder, px, AnyElement, App, Div, ElementId, InteractiveElement,
+    Interactivity, IntoElement, ParentElement, Pixels, RenderOnce, Rgba,
+    StatefulInteractiveElement, Styled, Window,
 };
 
 use crate::{h_flex, Brightness, Platform, ThemeProvider};
@@ -15,8 +15,8 @@ pub struct TitleBar {
 }
 
 impl RenderOnce for TitleBar {
-    fn render(self, cx: &mut WindowContext<'_>) -> impl IntoElement {
-        let height = Self::height(cx);
+    fn render(self, window: &mut Window, _: &mut App) -> impl IntoElement {
+        let height = Self::height(window);
         let platform = Platform::current();
 
         h_flex()
@@ -24,7 +24,7 @@ impl RenderOnce for TitleBar {
             .w_full()
             .h(height)
             .map(|this| {
-                if cx.is_fullscreen() {
+                if window.is_fullscreen() {
                     this.pl_2()
                 } else if platform == Platform::Mac {
                     this.pl(px(TRAFFIC_LIGHT_PADDING))
@@ -41,15 +41,15 @@ impl RenderOnce for TitleBar {
                     .justify_between()
                     .w_full()
                     .when(platform != Platform::Windows, |this| {
-                        this.on_click(|event, cx| {
+                        this.on_click(|event, window, _| {
                             if event.up.click_count == 2 {
-                                cx.zoom_window();
+                                window.zoom_window();
                             }
                         })
                     })
                     .children(self.children),
             )
-            .when(!cx.is_fullscreen(), |title_bar| match platform {
+            .when(!window.is_fullscreen(), |title_bar| match platform {
                 Platform::Mac | Platform::Linux => title_bar,
                 Platform::Windows => title_bar.child(WindowsWindowControls::new(height)),
             })
@@ -65,12 +65,12 @@ impl TitleBar {
     }
 
     #[cfg(not(target_os = "windows"))]
-    pub fn height(cx: &mut WindowContext) -> Pixels {
+    pub fn height(cx: &mut Window) -> Pixels {
         (1.75 * cx.rem_size()).max(px(34.))
     }
 
     #[cfg(target_os = "windows")]
-    pub fn height(_cx: &mut WindowContext) -> Pixels {
+    pub fn height(_cx: &mut Window) -> Pixels {
         px(32.)
     }
 }
@@ -105,8 +105,8 @@ impl WindowsWindowControls {
 }
 
 impl RenderOnce for WindowsWindowControls {
-    fn render(self, cx: &mut WindowContext) -> impl IntoElement {
-        let brightness = cx.theme().brightness();
+    fn render(self, window: &mut Window, app: &mut App) -> impl IntoElement {
+        let brightness = app.theme().brightness();
 
         let close_button_hover_color = Rgba {
             r: 232.0 / 255.0,
@@ -146,7 +146,7 @@ impl RenderOnce for WindowsWindowControls {
             ))
             .child(WindowsCaptionButton::new(
                 "maximize-or-restore",
-                if cx.is_maximized() {
+                if window.is_maximized() {
                     WindowsCaptionButtonIcon::Restore
                 } else {
                     WindowsCaptionButtonIcon::Maximize
@@ -191,7 +191,7 @@ impl WindowsCaptionButton {
 }
 
 impl RenderOnce for WindowsCaptionButton {
-    fn render(self, _cx: &mut WindowContext) -> impl IntoElement {
+    fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
         let width = px(36.);
 
         div()

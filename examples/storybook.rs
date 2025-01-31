@@ -125,7 +125,7 @@ impl Render for Storybook {
 }
 
 fn main() {
-    App::new()
+    Application::new()
         .with_assets(Assets::from(PathBuf::from("examples/assets")))
         .run(|cx: &mut AppContext| {
             // cx.set_global(Theme::light());

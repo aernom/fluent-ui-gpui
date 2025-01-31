@@ -1,7 +1,7 @@
 use gpui::{
-    div, prelude::FluentBuilder as _, px, relative, AnyElement, ClickEvent, CursorStyle, Div,
+    div, prelude::FluentBuilder as _, px, relative, AnyElement, App, ClickEvent, CursorStyle, Div,
     ElementId, FontWeight, InteractiveElement, IntoElement, MouseButton, ParentElement, RenderOnce,
-    SharedString, StatefulInteractiveElement as _, Styled, WindowContext,
+    SharedString, StatefulInteractiveElement as _, Styled, Window,
 };
 
 use crate::{Clickable, Disableable, FixedWidth, Theme, Toggleable};
@@ -15,7 +15,7 @@ pub struct NavItem {
     selected: bool,
     cursor_style: CursorStyle,
     disabled: bool,
-    on_click: Option<Box<dyn Fn(&ClickEvent, &mut WindowContext) + 'static>>,
+    on_click: Option<Box<dyn Fn(&ClickEvent, &mut Window) + 'static>>,
 }
 
 impl NavItem {
@@ -44,7 +44,7 @@ impl NavItem {
 }
 
 impl Clickable for NavItem {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
         self.on_click = Some(Box::new(handler));
         self
     }
@@ -106,8 +106,8 @@ pub enum Orientation {
 }
 
 impl RenderOnce for NavItem {
-    fn render(self, cx: &mut WindowContext) -> impl IntoElement {
-        let colors = Theme::of(cx).colors();
+    fn render(self, _: &mut Window, app: &mut App) -> impl IntoElement {
+        let colors = Theme::of(app).colors();
 
         self.base
             .id(self.id)
@@ -155,10 +155,10 @@ impl RenderOnce for NavItem {
             .when_some(
                 self.on_click.filter(|_| !self.disabled),
                 |this, on_click| {
-                    this.on_mouse_down(MouseButton::Left, |_, cx| cx.prevent_default())
-                        .on_click(move |event, cx| {
-                            cx.stop_propagation();
-                            (on_click)(event, cx)
+                    this.on_mouse_down(MouseButton::Left, |_, window, _| window.prevent_default())
+                        .on_click(move |event, window, app| {
+                            app.stop_propagation();
+                            (on_click)(event, window)
                         })
                 },
             )

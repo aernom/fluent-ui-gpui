@@ -1,7 +1,7 @@
 mod colors;
 pub use colors::*;
 
-use gpui::{AppContext, Global, WindowAppearance};
+use gpui::{App, Global, WindowAppearance};
 use std::ops::Deref;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
@@ -16,7 +16,7 @@ pub struct Theme {
 }
 
 impl Theme {
-    pub fn system(cx: &AppContext) -> Self {
+    pub fn system(cx: &App) -> Self {
         match cx.window_appearance() {
             WindowAppearance::Light | WindowAppearance::VibrantLight => Self::light(),
             WindowAppearance::Dark | WindowAppearance::VibrantDark => Self::dark(),
@@ -37,7 +37,7 @@ impl Theme {
         }
     }
 
-    pub fn of(cx: &AppContext) -> &Self {
+    pub fn of(cx: &App) -> &Self {
         cx.global::<Self>()
     }
 
@@ -58,7 +58,7 @@ pub trait ThemeProvider {
 
 impl<T> ThemeProvider for T
 where
-    T: Deref<Target = gpui::AppContext>,
+    T: Deref<Target = App>,
 {
     fn theme(&self) -> &Theme {
         Theme::of(self.deref())

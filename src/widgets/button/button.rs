@@ -1,6 +1,6 @@
 use gpui::{
-    prelude::FluentBuilder, relative, AnyElement, ClickEvent, ElementId, InteractiveElement,
-    IntoElement, RenderOnce, Styled, Svg, WindowContext,
+    prelude::FluentBuilder, relative, AnyElement, App, ClickEvent, ElementId, InteractiveElement,
+    IntoElement, RenderOnce, Styled, Svg, Window,
 };
 
 use crate::{Clickable, Disableable, FixedWidth, Toggleable};
@@ -51,7 +51,7 @@ impl Button {
 }
 
 impl Clickable for Button {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut WindowContext) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
         self.base = self.base.on_click(handler);
         self
     }
@@ -107,7 +107,7 @@ impl From<Button> for AnyElement {
 }
 
 impl RenderOnce for Button {
-    fn render(self, _: &mut WindowContext) -> impl IntoElement {
+    fn render(self, _: &mut Window, _: &mut App) -> impl IntoElement {
         let (px, py, min_w) = match self.base.size {
             ButtonSize::Normal => (gpui::px(12.), gpui::px(5.), Some(gpui::px(96.))),
             ButtonSize::Compact => (gpui::px(12.), gpui::px(2.), None),
