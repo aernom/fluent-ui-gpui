@@ -18,7 +18,7 @@ impl Playground {
 }
 
 impl Render for Playground {
-    fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
+    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let colors = cx.theme().colors();
         let label = match self.selected {
             true => "On",
@@ -43,7 +43,7 @@ impl Render for Playground {
                     .text_color(colors.on_accent())
                     .bg(colors.accent())
                     .child("Playground")
-                    .on_click(cx.listener(|_, _, cx| {
+                    .on_click(cx.listener(|_, _, _, cx| {
                         let paths = cx.prompt_for_paths(PathPromptOptions {
                             files: true,
                             directories: false,
@@ -81,7 +81,7 @@ impl Render for Playground {
                         .mt_4()
                         .label(label)
                         .toggle_state(self.selected)
-                        .on_click(cx.listener(|view, _, cx| {
+                        .on_click(cx.listener(|view, _, _, cx| {
                             view.selected = !view.selected;
                             cx.notify();
                         })),
@@ -90,7 +90,7 @@ impl Render for Playground {
                         .label(label)
                         .appearance(ButtonAppearance::Accent)
                         .toggle_state(self.selected)
-                        .on_click(cx.listener(|view, _, cx| {
+                        .on_click(cx.listener(|view, _, _, cx| {
                             view.selected = !view.selected;
                             cx.notify();
                         })),
@@ -99,7 +99,7 @@ impl Render for Playground {
                         .label(label)
                         .appearance(ButtonAppearance::Subtle)
                         .toggle_state(self.selected)
-                        .on_click(cx.listener(|view, _, cx| {
+                        .on_click(cx.listener(|view, _, _, cx| {
                             view.selected = !view.selected;
                             cx.notify();
                         })),
@@ -109,7 +109,7 @@ impl Render for Playground {
 }
 
 fn main() {
-    App::new().run(|cx: &mut AppContext| {
+    Application::new().run(|cx: &mut App| {
         cx.set_global(Theme::light());
         cx.activate(true);
 
@@ -127,7 +127,7 @@ fn main() {
                 }),
                 ..Default::default()
             },
-            |cx| cx.new_view(|_cx| Playground::new()),
+            |_, cx| cx.new(|_cx| Playground::new()),
         )
         .unwrap();
     });

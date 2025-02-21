@@ -6,6 +6,8 @@ use gpui::{
 
 use crate::{BorderRadius, Clickable, Disableable, FixedWidth, Theme, Toggleable};
 
+pub type OnClickHandler = Box<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>;
+
 #[derive(IntoElement)]
 pub(super) struct ButtonBase {
     pub(super) base: Div,
@@ -18,7 +20,7 @@ pub(super) struct ButtonBase {
     selected: bool,
     shape: ButtonShape,
     pub(super) size: ButtonSize,
-    on_click: Option<Box<dyn Fn(&ClickEvent, &mut Window) + 'static>>,
+    on_click: Option<OnClickHandler>,
     cursor_style: CursorStyle,
 }
 
@@ -72,7 +74,7 @@ impl ButtonBase {
 }
 
 impl Clickable for ButtonBase {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {
         self.on_click = Some(Box::new(handler));
         self
     }
@@ -128,7 +130,7 @@ impl From<ButtonBase> for AnyElement {
 }
 
 impl RenderOnce for ButtonBase {
-    fn render(self, cx: &mut Window, _: &mut App) -> impl IntoElement {
+    fn render(self, _: &mut Window, cx: &mut App) -> impl IntoElement {
         self.base
             .id(self.id)
             .flex()
@@ -147,7 +149,7 @@ impl RenderOnce for ButtonBase {
                     this.on_mouse_down(MouseButton::Left, |_, cx, _| cx.prevent_default())
                         .on_click(move |event, window, app| {
                             app.stop_propagation();
-                            (on_click)(event, window)
+                            (on_click)(event, window, app)
                         })
                 },
             )
@@ -240,7 +242,7 @@ pub(super) struct ButtonStyle {
 }
 
 impl ButtonAppearance {
-    fn base(&self, cx: &Window) -> ButtonStyle {
+    fn base(&self, cx: &App) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {
@@ -267,7 +269,7 @@ impl ButtonAppearance {
         }
     }
 
-    fn hover(&self, cx: &Window) -> ButtonStyle {
+    fn hover(&self, cx: &App) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {
@@ -294,7 +296,7 @@ impl ButtonAppearance {
         }
     }
 
-    fn disabled(&self, cx: &Window) -> ButtonStyle {
+    fn disabled(&self, cx: &App) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {
@@ -316,7 +318,7 @@ impl ButtonAppearance {
         }
     }
 
-    fn selected(&self, cx: &Window) -> ButtonStyle {
+    fn selected(&self, cx: &App) -> ButtonStyle {
         let colors = Theme::of(cx).colors();
 
         match self {

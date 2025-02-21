@@ -3,7 +3,7 @@ use gpui::{
     StyleRefinement, Styled, Window,
 };
 
-use crate::ThemeProvider;
+use crate::Theme;
 
 #[derive(IntoElement)]
 pub struct Divider {
@@ -50,7 +50,7 @@ impl Styled for Divider {
 }
 
 impl RenderOnce for Divider {
-    fn render(self, cx: &mut Window, _: &mut App) -> impl gpui::IntoElement {
+    fn render(self, _: &mut Window, cx: &mut App) -> impl gpui::IntoElement {
         self.base
             .map(|this| match self.axis {
                 Axis::Vertical => this.h_full().w(px(1.)),
@@ -71,8 +71,8 @@ pub enum DividerStyle {
 }
 
 impl DividerStyle {
-    fn fill(&self, cx: &Window) -> Hsla {
-        let colors = cx.theme().colors();
+    fn fill(&self, cx: &App) -> Hsla {
+        let colors = Theme::of(cx).colors();
 
         match self {
             DividerStyle::Default => colors.stroke_neutral_dim().into(),

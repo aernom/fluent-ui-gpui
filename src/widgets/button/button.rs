@@ -51,7 +51,7 @@ impl Button {
 }
 
 impl Clickable for Button {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {
         self.base = self.base.on_click(handler);
         self
     }

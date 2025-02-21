@@ -75,6 +75,12 @@ impl TitleBar {
     }
 }
 
+impl Default for TitleBar {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl InteractiveElement for TitleBar {
     fn interactivity(&mut self) -> &mut Interactivity {
         self.base.interactivity()

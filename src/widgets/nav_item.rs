@@ -4,7 +4,7 @@ use gpui::{
     SharedString, StatefulInteractiveElement as _, Styled, Window,
 };
 
-use crate::{Clickable, Disableable, FixedWidth, Theme, Toggleable};
+use crate::{Clickable, Disableable, FixedWidth, OnClickHandler, Theme, Toggleable};
 
 #[derive(IntoElement)]
 pub struct NavItem {
@@ -15,7 +15,7 @@ pub struct NavItem {
     selected: bool,
     cursor_style: CursorStyle,
     disabled: bool,
-    on_click: Option<Box<dyn Fn(&ClickEvent, &mut Window) + 'static>>,
+    on_click: Option<OnClickHandler>,
 }
 
 impl NavItem {
@@ -44,7 +44,7 @@ impl NavItem {
 }
 
 impl Clickable for NavItem {
-    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window) + 'static) -> Self {
+    fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {
         self.on_click = Some(Box::new(handler));
         self
     }
@@ -158,7 +158,7 @@ impl RenderOnce for NavItem {
                     this.on_mouse_down(MouseButton::Left, |_, window, _| window.prevent_default())
                         .on_click(move |event, window, app| {
                             app.stop_propagation();
-                            (on_click)(event, window)
+                            (on_click)(event, window, app)
                         })
                 },
             )

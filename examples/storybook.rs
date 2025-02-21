@@ -15,9 +15,9 @@ enum Story {
     Input,
 }
 
-impl Into<ElementId> for Story {
-    fn into(self) -> ElementId {
-        match self {
+impl From<Story> for ElementId {
+    fn from(val: Story) -> Self {
+        match val {
             Story::Button => "button_story",
             Story::Divider => "divider_story",
             Story::Input => "input_story",
@@ -31,7 +31,7 @@ struct Storybook {
 }
 
 impl Render for Storybook {
-    fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
+    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let colors = cx.theme().colors();
 
         h_flex()
@@ -45,7 +45,7 @@ impl Render for Storybook {
                         .label("Buttons")
                         .orientation(Orientation::Horizontal)
                         .toggle_state(self.selected_tab == Story::Button)
-                        .on_click(cx.listener(|view, _, cx| {
+                        .on_click(cx.listener(|view, _, _, cx| {
                             view.selected_tab = Story::Button;
                             cx.notify();
                         })),
@@ -53,7 +53,7 @@ impl Render for Storybook {
                         .label("Dividers")
                         .orientation(Orientation::Horizontal)
                         .toggle_state(self.selected_tab == Story::Divider)
-                        .on_click(cx.listener(|view, _, cx| {
+                        .on_click(cx.listener(|view, _, _, cx| {
                             view.selected_tab = Story::Divider;
                             cx.notify();
                         })),
@@ -61,7 +61,7 @@ impl Render for Storybook {
                         .label("Inputs")
                         .orientation(Orientation::Horizontal)
                         .toggle_state(self.selected_tab == Story::Input)
-                        .on_click(cx.listener(|view, _, cx| {
+                        .on_click(cx.listener(|view, _, _, cx| {
                             view.selected_tab = Story::Input;
                             cx.notify();
                         })),
@@ -82,21 +82,21 @@ impl Render for Storybook {
                             NavItem::new(Story::Button)
                                 .label("Buttons")
                                 .toggle_state(self.selected_tab == Story::Button)
-                                .on_click(cx.listener(|view, _, cx| {
+                                .on_click(cx.listener(|view, _, _, cx| {
                                     view.selected_tab = Story::Button;
                                     cx.notify();
                                 })),
                             NavItem::new(Story::Divider)
                                 .label("Dividers")
                                 .toggle_state(self.selected_tab == Story::Divider)
-                                .on_click(cx.listener(|view, _, cx| {
+                                .on_click(cx.listener(|view, _, _, cx| {
                                     view.selected_tab = Story::Divider;
                                     cx.notify();
                                 })),
                             NavItem::new(Story::Input)
                                 .label("Inputs")
                                 .toggle_state(self.selected_tab == Story::Input)
-                                .on_click(cx.listener(|view, _, cx| {
+                                .on_click(cx.listener(|view, _, _, cx| {
                                     view.selected_tab = Story::Input;
                                     cx.notify();
                                 })),
@@ -127,7 +127,7 @@ impl Render for Storybook {
 fn main() {
     Application::new()
         .with_assets(Assets::from(PathBuf::from("examples/assets")))
-        .run(|cx: &mut AppContext| {
+        .run(|cx: &mut App| {
             // cx.set_global(Theme::light());
             // cx.set_global(Theme::dark());
             cx.set_global(Theme::system(cx));
@@ -148,8 +148,8 @@ fn main() {
                     window_background: WindowBackgroundAppearance::Blurred,
                     ..Default::default()
                 },
-                |cx| {
-                    cx.new_view(|_cx| Storybook {
+                |_, cx| {
+                    cx.new(|_cx| Storybook {
                         selected_tab: Story::Button,
                     })
                 },
