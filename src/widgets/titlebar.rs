@@ -42,7 +42,7 @@ impl RenderOnce for TitleBar {
                     .w_full()
                     .when(platform != Platform::Windows, |this| {
                         this.on_click(|event, window, _| {
-                            if event.up.click_count == 2 {
+                            if event.click_count() == 2 {
                                 window.zoom_window();
                             }
                         })
