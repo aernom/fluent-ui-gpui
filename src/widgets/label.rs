@@ -128,7 +128,7 @@ impl RenderOnce for Label {
                 this.text_style()
                     .get_or_insert_with(Default::default)
                     .underline = Some(UnderlineStyle {
-                    thickness: gpui::Pixels(1.),
+                    thickness: gpui::Pixels::from(1.),
                     color: None,
                     wavy: false,
                 });

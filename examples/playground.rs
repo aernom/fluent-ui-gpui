@@ -48,6 +48,7 @@ impl Render for Playground {
                             files: true,
                             directories: false,
                             multiple: true,
+                            prompt: Some("Oh, look! A prompt!".into()),
                         });
 
                         cx.spawn(|this, mut cx| async move {
