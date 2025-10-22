@@ -15,4 +15,9 @@ impl Platform {
     pub fn current() -> Self {
         Self::Mac
     }
+
+    #[cfg(target_os = "linux")]
+    pub fn current() -> Self {
+        Self::Linux
+    }
 }
