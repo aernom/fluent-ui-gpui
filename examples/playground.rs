@@ -51,17 +51,17 @@ impl Render for Playground {
                             prompt: Some("Oh, look! A prompt!".into()),
                         });
 
-                        cx.spawn(|this, mut cx| async move {
-                            if let Ok(Ok(Some(paths))) = paths.await {
-                                this.upgrade()
-                                    .unwrap()
-                                    .update(&mut cx, |this, _| {
-                                        this.files.extend(paths);
-                                    })
-                                    .ok();
-                            }
-                        })
-                        .detach();
+                        // cx.spawn(|this: WeakEntity<Playground>, mut cx| async move {
+                        //     if let Ok(Ok(Some(paths))) = paths.await {
+                        //         this.upgrade()
+                        //             .unwrap()
+                        //             .update(cx, |this, _| {
+                        //                 this.files.extend(paths);
+                        //             })
+                        //             .ok();
+                        //     }
+                        // })
+                        // .detach();
                     })),
             )
             .child(

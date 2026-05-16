@@ -4,6 +4,6 @@ version = "0.1.2"
 edition = "2021"
 
 [dependencies]
-gpui = "0.2"
+gpui = { version = "*" }
 smallvec = "1"
 unicode-segmentation = "1.12.0"
